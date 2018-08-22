@@ -1,0 +1,226 @@
+<include file="Public/header"/>
+<div class="row">
+    <div class="col s12 m8">
+        <div class="f-user-message-bloc">
+            <div class="card f-user-message">
+                <div class="card-content f-user-message-content">                        
+                        <eq name='act' value='1'>
+                             <p class="card-title"><i>
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    preserveAspectRatio="xMidYMid" viewBox="0 0 20 20">
+                                            <path fill="#737373" d="M7.267,19.258c1.407,0,2.547-0.958,2.547-2.139H4.719C4.719,18.3,5.859,19.258,7.267,19.258z
+                                                M12.871,13.145c-0.458-0.458,0-3.866,0-6.21c0-1.995-1.408-4.501-4.089-5.204C8.715,0.763,8.066,0,7.267,0
+                                               S5.818,0.763,5.751,1.731C3.07,2.434,1.662,4.939,1.662,6.935c0,2.344,0.458,5.751,0,6.21C1.204,13.604,0,15.896,0,15.896h14.533
+                                               C14.533,15.896,13.329,13.604,12.871,13.145z"/>
+                                               </svg>
+                            </i>
+                                <eq name="Think.session.lang" value="1">
+                                    System message
+                                <else/>
+                                    系统消息
+                                </eq>
+                            </p>
+                        <else/>
+                            <p class="card-title"><i>
+                            <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid"
+                                 viewBox="0 0 19 21">
+                                <path d="M6.7 3.8C3 3.8 0 6.4 0 9.6c0 1.8 0.9 3.4 2.4 4.4l-0.8 2 2.3-1.2c0.8 0.3 1.8 0.5 2.7 0.5 3.7 0 6.7-2.6 6.7-5.7C13.4 6.4 10.4 3.8 6.7 3.8zM3.5 11c-0.4 0-0.8-0.3-0.8-0.8 0-0.4 0.3-0.8 0.8-0.8 0.4 0 0.8 0.3 0.8 0.8C4.3 10.7 4 11 3.5 11zM6.5 11c-0.4 0-0.8-0.3-0.8-0.8 0-0.4 0.3-0.8 0.8-0.8S7.2 9.8 7.2 10.3C7.2 10.7 6.9 11 6.5 11zM9.4 11c-0.4 0-0.8-0.3-0.8-0.8 0-0.4 0.3-0.8 0.8-0.8s0.8 0.3 0.8 0.8C10.1 10.7 9.8 11 9.4 11zM19.2 5.7C19.2 2.6 16.2 0 12.5 0 9.8 0 7.5 1.3 6.5 3.2c0.1 0 0.2 0 0.2 0 4.1 0 7.4 2.8 7.4 6.3 0 0.6-0.1 1.2-0.3 1.8 0.8-0.1 1.5-0.4 2.1-0.7l2.7 1.2 -1.3-2.2C18.5 8.6 19.2 7.2 19.2 5.7z"
+                                      fill="#737373"></path>
+                            </svg>
+                        </i>
+                            <eq name="Think.session.lang" value="1">
+                                Instant messaging
+                            <else/>
+                                即时消息
+                            </eq>
+                        </p>
+                            
+                        </eq>
+                    <ul class="collection f-user-message-collection">  
+                         <foreach name='iList' item='list'>
+                            <li class="collection-item avatar">
+                                <a href="<{:U('User/info',array('id'=>code($list['assign_user_id'],1)))}>">
+                                    <img src="<{$Think.const.PUBLIC_URL}>Upload/<{$list.assign_user_id|getPhoto}>" alt="" class="circle">
+                                    <span class="title"><{$list.assign_user_id|getUsername}></span>
+                                </a>
+                                <p>
+                                    <eq name="Think.session.lang" value="1">
+                                        <{$list.en_content}>
+                                    <else/>
+                                        <{$list.content}>
+                                    </eq>
+                                </p>
+                                <div class="secondary-content f-btn">
+                                    <ul id="dropdown<{$key}>" class="dropdown-content">   
+                                        <switch name="list['type']">
+                                            <case value='1'>
+                                                <li><a href="<{:U('Club/activityInfo',array('id'=>code($list['active_id'],1)))}>">
+                                                    <eq name="Think.session.lang" value="1">
+                                                        Details
+                                                    <else/>
+                                                        详情
+                                                    </eq>
+                                                    </a></li>
+                                                <li><a href="<{:U('Im/delIm',array('id'=>code($list['id'],1)))}>">
+                                                    <eq name="Think.session.lang" value="1">
+                                                        Delete
+                                                    <else/>
+                                                        删除
+                                                    </eq>   
+                                                    </a></li>
+                                            </case>
+                                            <case value='2'>
+                                                <li><a href="<{:U('Im/message',array('id'=>code($list['id'],1),'sign'=>code('Y',1)))}>">
+                                                    <eq name="Think.session.lang" value="1">
+                                                        Agree
+                                                    <else/>
+                                                        同意
+                                                    </eq>
+                                                </a></li>
+                                                <li><a href="<{:U('Im/message',array('id'=>code($list['id'],1),'sign'=>code('N',1)))}>">
+                                                    <eq name="Think.session.lang" value="1">
+                                                        Refuse
+                                                    <else/>
+                                                        拒绝
+                                                    </eq>
+                                                </a></li>
+                                                <li><a href="<{:U('Im/delIm',array('id'=>code($list['id'],1),'sign'=>code('N',1)))}>">
+                                                    <eq name="Think.session.lang" value="1">
+                                                        Delete
+                                                    <else/>
+                                                        删除
+                                                    </eq></a></li>
+                                            </case>
+                                            <case value='3'>
+                                                <li><a class="modal-trigger" href="#modal1">
+                                                    <eq name="Think.session.lang" value="1">
+                                                        Reply
+                                                    <else/>
+                                                        回复
+                                                    </eq>
+                                                </a></li>
+                                                <li><a href="<{:U('Im/delIm',array('id'=>code($list['id'],1)))}>">
+                                                    <eq name="Think.session.lang" value="1">
+                                                        Delete
+                                                    <else/>
+                                                        删除
+                                                    </eq>
+                                                    </a></li>
+                                            </case>
+                                            <case value='4'>
+                                                <li><a href="<{:U('Im/delIm',array('id'=>code($list['id'],1)))}>">
+                                                    <eq name="Think.session.lang" value="1">
+                                                        Delete
+                                                    <else/>
+                                                        删除
+                                                    </eq>
+                                                    </a></li>
+                                            </case>
+                                            <case value='5'>
+                                                <li><a href="<{:U('Im/delIm',array('id'=>code($list['id'],1)))}>">
+                                                    <eq name="Think.session.lang" value="1">
+                                                        Delete
+                                                    <else/>
+                                                        删除
+                                                    </eq>
+                                                    </a></li>
+                                            </case>
+                                        </switch>                                        
+                                    </ul>
+                                    <a onclick="clickId(this)" id="<{$list.id}>" class="btn f-btn-blue f-btn-small dropdown-button" href="#!" data-activates="dropdown<{$key}>">
+                                        
+                                        <eq name="Think.session.lang" value="1">
+                                            Handle
+                                        <else/>
+                                            处理
+                                        </eq>
+                                        <i class="mdi-navigation-arrow-drop-down right">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             viewBox="0 0 18 21">
+                                            <path d="M8 8l-131.706-131.705h263.414l-131.706 131.705z" fill="#fff"></path>
+                                        </svg>
+                                    </i></a>
+                                </div>
+                            </li>
+                        </foreach>                       
+                    </ul>
+                    <notempty name='iList'>
+                        <div class="center f-pagination-bloc">
+                            <{$pageList}>
+                        </div>
+                    </notempty>                    
+                </div>
+            </div>
+        </div>
+        <!-- f-replay-bloc -->
+        <div class="modal f-modal-bloc" id="modal1">
+            <div class="modal-content f-modal">
+                <h4>
+                    <eq name="Think.session.lang" value="1">
+                        Reply
+                    <else/>
+                        回复
+                    </eq>
+                </h4>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="textarea11" class="materialize-textarea" length="120"></textarea>
+                        <label for="textarea11" class="">
+                            <eq name="Think.session.lang" value="1">
+                                Textarea
+                            <else/>
+                                内容
+                            </eq>
+                        </label>
+                        <span class="character-counter" style="float: right; font-size: 12px; height: 1px;"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p class="f-btn center">
+                        <button class="btn waves-effect waves-light f-btn-blue c-font-bold f-btn-small modal-close" type="submit" name="action" id="reply">回复
+                        </button>
+                        <button class="btn waves-effect waves-light f-btn-blue c-font-bold f-btn-small modal-close" type="submit" name="action">取消
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="id" value=""/>
+    </div>
+<!--中间end-->
+<include file='Public/foot'/>
+<script>
+    function clickId(obj){
+        $("input[name='id']").val($(obj).attr("id"));
+    }
+    $(function(){
+        $("#reply").click(function(){
+            var content =$("#textarea11").val();
+            var id      =$("input[name='id']").val();
+            if(content==""){
+                if("<?php echo $_SESSION['lang'];?>"=='1'){
+                    alert("Reply content can not be empty");
+                    return false;
+                }else{                                    
+                    alert("回复内容不能为空");
+                    return false;
+                }
+            }
+            $.post('__MODULE__/Im/reply',{id:id,content:content},function(data){
+                if(data==1){
+                    if("<?php echo $_SESSION['lang'];?>"=='1'){
+                        alert("Message success");
+                    }else{
+                        alert("留言成功");
+                    }
+                }else{
+                    if("<?php echo $_SESSION['lang'];?>"=='1'){
+                        alert("Message failed");
+                    }else{
+                       alert("留言失败");
+                    }
+                }
+            },'HTML');
+        });
+    });
+</script>

@@ -1,0 +1,54 @@
+<include file="Public/header"/>
+<div class="row">
+<div class="col s12 m8">
+    <div class="f-news-list-bloc">  
+        <div class="card f-news-list">   
+            <include file="Public/info"/>
+        </div>
+        <foreach name="nList" item="nList">
+            <div class="card f-news-list">
+                <div style="height:20px"></div>                
+                <div class="card-content">
+                    <h3 class="header">
+                        <if condition="$nList['sign'] eq 3">                            
+                            <a href="<{$nList.id|code=1|getUrl}>" target="view_window">
+                                <eq name="Think.session.lang" value="1">
+                                    <{$nList.en_title}>
+                                <else/>
+                                    <{$nList.title}>
+                                </eq>
+                            </a>
+                        <else/>
+                        <a href="<{:U('Notice/indexNews',array('id'=>code($nList['id'],1),'sign'=>code($nList['sign'],1)))}>">
+                                <eq name="Think.session.lang" value="1">
+                                    <{$nList.en_title}>
+                                <else/>
+                                    <{$nList.title}>
+                                </eq>
+                            </a>
+                        </if>
+                    </h3>
+                    <p class="f-news-list-info">
+                        <eq name="Think.session.lang" value="1">
+                             <{$nList.en_content|getText}>
+                        <else/>
+                             <{$nList.content|getText}>
+                        </eq>
+                        <eq name="nList['sign']" value='3'>
+                            <a href="<{$nList.id|code=1|getUrl}>" class="card-action" target="view_window">Read Now</a>
+                        <else/>                            
+                            <a href="<{:U('Notice/info',array('id'=>code($nList['id'],1)))}>" class="card-action">Read Now</a>
+                        </eq>
+                    </p>
+                </div>
+            </div>
+        </foreach>
+    </div>
+    <notempty name='nList'>
+        <div class="center f-pagination-bloc">
+            <{$pageList}>        
+        </div>
+    </notempty>    
+</div>
+<!--中间end-->
+<include file='Public/foot'/>

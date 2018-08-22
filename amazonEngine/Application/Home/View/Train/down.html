@@ -1,0 +1,69 @@
+<include file="Public/header"/>
+<div class="row">
+<div class="col s12 m8">
+    <div class="card f-training-list-bloc">
+        <div class="card-content f-traning-list-content">
+            <p class="card-title"><i>
+                <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 0 17 14">
+                    <path fill="#737373" d="M4.058,6.399c1.335,0,2.418-1.083,2.418-2.418c0-1.336-1.083-2.419-2.418-2.419
+                                        c-1.336,0-2.418,1.083-2.418,2.419C1.64,5.316,2.722,6.399,4.058,6.399z M6.651,0v7.12C6.117,6.93,5.546,6.817,4.946,6.817
+                                        C2.603,6.817,0.645,8.399,0,10.56c1.301,1.506,3.22,2.463,5.365,2.463c1.711,0,3.272-0.616,4.497-1.625
+                                        c0.26-0.168,0.473-0.414,0.59-0.725l0.331-0.883h5.372V0H6.651z M15.155,8.789h-3.997l0.445-1.188
+                                        c0.16-0.426,0.105-0.878-0.1-1.249l1.804-4.281L12.58,1.765l-1.682,3.992c-0.056-0.03-0.111-0.062-0.172-0.085
+                                        C9.954,5.381,9.085,5.775,8.795,6.548L8.239,8.03C8.053,7.873,7.858,7.728,7.651,7.599V1h7.504V8.789z"></path>
+                </svg>
+            </i>
+                <eq name="Think.session.lang" value="1">
+                    Training 
+                <else/>
+                    培训
+                </eq>
+            </p>
+            <div class="f-traning-list">
+                <table class="highlight">
+                    <foreach name="dataList" item="daList">
+                        <tr>
+                            <eq name="Think.session.lang" value="1">
+                                <td>
+                                    <span class="title"><{$daList.en_title}></span>
+                                    <p style="width: 459px;"><{$daList.en_desc}></p>
+                                </td>
+                            <else/>
+                                <td>
+                                    <span class="title"><{$daList.title}></span>
+                                    <p style="width: 459px;"><{$daList.desc}></p>
+                                </td>
+                            </eq>
+                            <td class="center"><span class="author"><{$daList.assign_user_id|getUsername}></span>
+                                <time><{$daList.add_time|substr=0,10}></time>
+                            </td>
+                            <td>
+                                <a href="<{:U('Train/dataDownload',array('id'=>code($daList['id'],1),'t_id'=>code($daList['t_id'],1),'sign'=>code('1',1)))}>">   
+                                    <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid"
+                                         viewBox="0 0 25 27">
+                                        <rect x="0" y="0" fill="none" width="25" height="27"/>
+                                                <path fill="#5AAADE" d="M11.6,18.4C11.6,18.4,11.6,18.4,11.6,18.4c0.1,0,0.1,0.1,0.1,0.1c0,0,0,0,0,0c0,0,0.1,0,0.1,0.1
+                                    c0,0,0,0,0,0c0,0,0.1,0,0.1,0c0,0,0,0,0.1,0c0.1,0,0.1,0,0.2,0c0.1,0,0.1,0,0.2,0c0,0,0,0,0.1,0c0,0,0.1,0,0.1,0c0,0,0,0,0.1,0
+                                    c0,0,0.1,0,0.1-0.1c0,0,0,0,0.1-0.1c0,0,0,0,0.1,0l5.1-4.7c0.4-0.4,0.4-1,0.1-1.4c-0.4-0.4-1-0.4-1.4-0.1l-3.5,3.2V1.2
+                                    c0-0.5-0.4-1-1-1c-0.5,0-1,0.4-1,1v14.2L8,12.3c-0.4-0.4-1-0.4-1.4,0c-0.4,0.4-0.4,1,0,1.4L11.6,18.4z M21.2,6h-2.2v2.1h2.2
+                                    c0.6,0,1.2,0.7,1.2,1.4v13.9c0,0.8-0.6,1.4-1.4,1.4H3.7c-0.8,0-1.4-0.6-1.4-1.4V9.5c0-0.8,0.5-1.4,1.2-1.4h2.2V6H3.4
+                                    C1.6,6,0.2,7.6,0.2,9.5v13.9c0,1.9,1.6,3.5,3.5,3.5h17.2c1.9,0,3.5-1.6,3.5-3.5V9.5C24.4,7.6,22.9,6,21.2,6z"/>
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                    </foreach>
+                </table>
+            </div>
+            <notempty>
+                <div class="center f-pagination-bloc">
+                    <ul class="pagination f-pagination">
+                        <{$pageList}>
+                    </ul>
+                </div>
+            </notempty>            
+        </div>
+    </div>
+
+</div>
+<include file='Public/foot'/>

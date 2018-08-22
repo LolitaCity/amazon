@@ -1,0 +1,73 @@
+<include file="Public:pagerForm"/>
+<div class="pageHeader">
+    <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="__CONTROLLER__/invalidImg" method="post">
+	<div class="searchBar">		
+            <table class="searchContent">
+                <tr>                   
+                    <td>
+                        添加时间：<input type="text" name="add_time" class="date" readonly="true" value="<{$Think.post.add_time}>"/>
+                    </td>
+                </tr>
+            </table>
+            <div class="subBar">
+                <ul>
+                    <li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
+                </ul>
+            </div>
+	</div>
+    </form>
+</div>
+<div class="pageContent">
+    <div class="panelBar">
+        <ul class="toolBar">  
+            <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="id[]" href="__CONTROLLER__/delete/db/<?php echo code('Invaimg',1);?>" class="delete"><span>批量删除</span></a></li>                  
+            <li class="line">line</li>
+        </ul>
+    </div>
+    <table class="table" width="50%" layoutH="138">
+        <thead>
+            <tr>
+                <th width="22"><input type="checkbox" group="id[]" class="checkboxCtrl"></th>
+                <th width="60"  align="center">序号</th>
+                <th width="70" orderField='db_name' <if condition="$_REQUEST['_order'] eq 'db_name'">class="<{$_REQUEST._sort}>"</if> align="center">数据库</th>
+                <th width="100" align="center">图片</th>
+                <th width="80"  orderField='add_time' <if condition="$_REQUEST['_order'] eq 'add_time'">class="<{$_REQUEST._sort}>"</if> align="center">时间</th>
+                <th width="70" align="center">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php $i=1;?> 
+            <foreach name='list' item="list">
+                <tr target="l_id" rel="<{$list.id}>">
+                    <td><input name="id[]" value="<{$list.id}>" type="checkbox"></td>
+                    <td><{$key+1}></td>
+                    <td><{$list.db_name}></td>
+                    <td class="imgs">
+                        <img src="<{$Think.const.PUBLIC_URL}>Upload/<{$list.imagepath}>" width="96px"/>
+                    </td>
+                    <td><{$list.add_time|substr=0,10}></td>
+                    <td>
+                        <a title="确定删除该记录" target="ajaxTodo" href="<{:U('System/delete',array('id'=>code($list['id'],1),'db'=>code('Invaimg',1)))}>" style='color:red'>删除</a>                       
+                    </td>
+                </tr>
+            <?php $i++;?>
+            </foreach>
+        </tbody>        
+    </table>
+    <div class="panelBar">
+        <div class="pages">
+            <span>显示</span>
+            <select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+            </select>
+            <span>条，共<{$totalCount}>条</span>          
+        </div>
+        <div class="pagination" targetType="navTab" totalCount="<{$totalCount}>" numPerPage="<{$numPerPage}>" pageNumShown="6"  currentPage="<{$currentPage}>"></div>
+    </div>
+</div>
+<style type="text/css" media="screen">
+    .imgs div{height:100px!important;}
+</style>

@@ -1,0 +1,67 @@
+<include file="Public:pagerForm"/>
+<div class="pageHeader">
+    <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="__CONTROLLER__/role" method="post">
+	<div class="searchBar">		
+            <table class="searchContent">
+                <tr>
+                    <td>
+                        角色名称：<input type="text" name="name" value="<{$Think.post.name}>"/>
+                    </td>
+                </tr>
+            </table>
+            <div class="subBar">
+                <ul>
+                    <li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
+                </ul>
+            </div>
+	</div>
+    </form>
+</div>
+<div class="pageContent">
+    <div class="panelBar">
+        <ul class="toolBar">            
+            <li><a class="add" href="<{:U('Web/show',array('sign'=>code('2',1),'db'=>code('Role',1)))}>" target="dialog" mask="true" width='400' height='200'><span>添加角色</span></a></li>                      
+            <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="id[]" href="__CONTROLLER__/del/sign/<?php echo code('1',1)?>/db/<?php echo code('Role',1);?>" class="delete"><span>批量删除</span></a></li>                  
+            <li><a class="edit" href="__CONTROLLER__/show/id/{l_id}/sign/<?php echo code('2',1);?>/db/<?php echo code('Role',1);?>" target="dialog" mask="true" warn="请选择一条信息" width='400' height='200'><span>角色修改</span></a></li>
+            <li class="line">line</li>
+        </ul>
+    </div>
+    <table class="table" width="350" layoutH="138">
+        <thead>
+            <tr>
+                <th width="22"><input type="checkbox" group="id[]" class="checkboxCtrl"></th>
+                <th width="60"  align="center">序号</th>
+                <th width="118" >角色名称</th>               
+                <th width="150" align="center">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <foreach name='list' item="list">
+                <neq name="list['name']" value='普通用户'>
+                    <tr target="l_id" rel="<{$list.id}>">
+                        <td><input name="id[]" value="<{$list.id}>" type="checkbox"></td>
+                        <td><{$key+1}></td>
+                        <td><{$list.name}></td>          
+                        <td>
+                            <a href="<{:U('Web/nodeList',array('role_id'=>code($list['id'],1)))}>" target="dialog" height="600" width="500"><span style='color:green'>角色授权</span></a> | 
+                            <a title="确定删除该角色" target="ajaxTodo" href="<{:U('Web/del',array('id'=>code($list['id'],1),'db'=>code('Role',1),'sign'=>code('1',1)))}>" style='color:red'>删除</a>                       
+                        </td>
+                    </tr>
+                </neq>
+            </foreach>
+        </tbody>        
+    </table>
+    <div class="panelBar">
+        <div class="pages">
+            <span>显示</span>
+            <select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+            </select>
+            <span>条，共<{$totalCount}>条</span>          
+        </div>
+        <div class="pagination" targetType="navTab" totalCount="<{$totalCount}>" numPerPage="<{$numPerPage}>" pageNumShown="6"  currentPage="<{$currentPage}>"></div>
+    </div>
+</div>

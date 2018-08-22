@@ -1,0 +1,154 @@
+<style>    
+    #testFileInput2{
+        height: 30px; width: 102px; margin-left: 128px;
+    }
+    #preview1, #topPhpto
+        {  
+            width:150px;  
+            padding-left: 65px;padding-top: 15px; border-top-width: 5px;
+            //height:150px;  
+        }
+</style>
+<div class="pageContent">	
+    <form method="post" action="__CONTROLLER__/edit?callbackType=closeCurrent" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+        <input type="hidden"  id='hidden'  name='id' value="<{$vo.id}>"/>
+            
+        <if condition='$_sign eq 1'>
+            <input type="hidden" name="image" value="<{$vo.image}>" id="image">
+            <div class="pageFormContent" layoutH="58">
+                <div class="unit">
+                    <label>用户名：</label>
+                    <input type="text" name="name" size="25"  value="<{$vo.name}>" class='required' />
+                </div>
+                <div class="unit">
+                    <label>昵称：</label>
+                    <input type="text" name="nickname" size="25"  value="<{$vo.nickname}>" class='' />
+                </div>
+                <div class="unit">
+                    <label>密码：</label>
+                    <input type="password" id="cp_newPassword" name="newPassword" size="25" minlength="6" maxlength="20" <neq name="vo['id']" value=''>class="alphanumeric"<else/>class="required alphanumeric"</neq>/>
+                </div>
+                <div class="unit">
+                    <label>重复输入密码：</label>
+                    <input type="password" name="rnewPassword" size="25" equalTo="#cp_newPassword" <neq name="vo['id']" value=''>class="alphanumeric"<else/>class="required alphanumeric"</neq>/>
+                </div>
+                <div id="preview1" href="">
+                    <img src="<{$Think.const.PUBLIC_URL}>Upload/<{$vo.image}>" id='topPhpto'/>               
+                </div>
+                <div class="unit">
+                    <label>头像：</label>  
+                    <input id="testFileInput2" type="file" name="images"                                        
+                        uploaderOption="{
+                            swf:'<{$Think.const.DWZ_URL}>uploadify/scripts/uploadify.swf',
+                            uploader:'__MODULE__/Common/upImg',
+                            formData:{authId:<?php echo $_SESSION['authId'];?>, ajax:4},
+                            buttonText:'请选择文件',
+                            fileSizeLimit:'20000KB',
+                            fileTypeDesc:'*.jpg;*.jpeg;*.gif;*.png;',
+                            fileTypeExts:'*.jpg;*.jpeg;*.gif;*.png;',
+                            auto:true,
+                            onUploadSuccess:function(file,data,respore){
+                                $('#topPhpto').attr('src','<{$Think.const.PUBLIC_URL}>'+'Upload/'+data);
+                                $('#image').val(data);
+                            }
+                        }"
+                    />
+                </div>
+                <div class="unit">
+                    <label>手机：</label>
+                    <input type="text" name="tel" size="25" minlength="11" maxlength="11"  value="<{$vo.tel}>" class='phone' />
+                </div>
+                <div class="unit">
+                    <label>邮箱：</label>
+                    <input type="text" name="email" size="25"  value="<{$vo.email}>" class='email' />
+                </div>
+                <div class="unit">
+                    <label>部门：</label>
+                    <select class="" name="section_id" id='section' style="width: 101px;">
+                        <foreach name="list" item='section'>
+                            <neq name="section['name']" value='所有部门'>
+                                <option value="<{$section['id']}>" <if condition="$section['id'] eq $vo['section_id']">selected</if>><{$section.name}></option>
+                            </neq>
+                        </foreach>
+                    </select>
+                </div>
+                <div class="unit">
+                    <label>角色：</label>
+                    <select class="" name="role_id" id='section' style="width: 101px;">
+                        <foreach name="rlist" item='role'>
+                            <neq name="_SESSION['authId']" value='1'>
+                                <if condition="$role['name'] neq '超级管理员'">
+                                    <option value="<{$role['id']}>" <if condition="$role['id'] eq $u_role">selected</if>><{$role.name}></option>
+                                </if>
+                            <else/>
+                                <option value="<{$role['id']}>" <if condition="$role['id'] eq $u_role">selected</if>><{$role.name}></option>
+                            </neq>
+                        </foreach>
+                    </select>
+                </div>
+                <div class="unit">
+                    <label>工号：</label>
+                    <input type="text" name="job_number" size="25"  value="<{$vo.job_number}>" class='' />
+                </div>
+                <div class="unit">
+                    <label>岗位：</label>
+                    <input type="text" name="position" size="25"  value="<{$vo.position}>" class='' />
+                </div>
+                <div class="unit">
+                    <label>入职日期：</label>
+                    <input type="text" name="board_time" size="22"  value="<{$vo.board_time}>" class="date" readonly="true" />
+                    <a class="inputDateButton" href="javascript:;">选择</a>
+                </div>
+                <div class="unit">
+                    <label>个人描述：</label>
+                    <textarea name="desc_" rows="6" cols="20" style="resize: none;" class=""><{$vo.desc_}></textarea>
+                </div>
+                <div class="unit">
+                    <label>英文描述：</label>
+                    <textarea name="en_desc_" rows="6" cols="20" style="resize: none;" class=""><{$vo.en_desc_}></textarea>
+                </div>
+            </div>
+        <else/>
+            <div class="pageFormContent" layoutH="58">
+                <div class="unit">
+                    <label>用户名：</label>
+                    <input type="text" name="name" size="25"  value="<{$vo.name}>" class='required alphanumeric' />
+                </div>
+                <div class="unit">
+                    <label>昵称：</label>
+                    <input type="text" name="nickname" size="25"  value="<{$vo.nickname}>" class='required' />
+                </div>
+                <div class="unit">
+                    <label>密码：</label>
+                    <input type="password" id="cp_newPassword" name="password" size="25" minlength="6" maxlength="20" <neq name="vo['id']" value=''>class="alphanumeric"<else/>class="required alphanumeric"</neq>/>
+                </div>
+                <div class="unit">
+                    <label>重复输入密码：</label>
+                    <input type="password" name="rnewPassword" size="25" equalTo="#cp_newPassword" <neq name="vo['id']" value=''>class="alphanumeric"<else/>class="required alphanumeric"</neq>/>
+                </div>
+                <div class="unit">
+                    <label>电话：</label>
+                    <input type="text" name="tel" size="25"  value="<{$vo.tel}>" class='phone' />
+                </div>
+                <div class="unit">
+                    <label>邮箱：</label>
+                    <input type="text" name="email" size="25"  value="<{$vo.email}>" class='email' />
+                </div>
+                <div class="unit">
+                    <label>角色：</label>
+                    <select class="" name="role_id" id='section' style="width: 101px;">
+                        <foreach name="rlist" item='role'>
+                            <option value="<{$role['id']}>" <if condition="$role['id'] eq $u_role">selected</if>><{$role.name}></option>                           
+                        </foreach>
+                    </select>
+                </div>
+            </div>        
+        </if>
+        <div class="formBar">
+            <ul>
+                <li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>	
+</div>

@@ -1,0 +1,159 @@
+<include file="Public/header"/>
+<div class="row">
+    
+    <div class="col l12">
+        <div class="card f-training-department-bloc">
+            <div class="card-content f-training-department">
+                <p class="card-title"><i>
+                    <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid"
+                         viewBox="0 0 18 18">
+                        <rect x="0" y="0" fill="#FFFFFF" width="16" height="16"/>
+                        <path fill="#787878" d="M8.1,0C3.6,0,0,3.6,0,8.1c0,4.5,3.6,8.1,8.1,8.1s8.1-3.6,8.1-8.1C16.2,3.6,12.6,0,8.1,0z M7.7,3.4
+                        c1.3,0,2.4,1.1,2.4,2.4c0,1.3-1.1,2.4-2.4,2.4c-1.3,0-2.4-1.1-2.4-2.4C5.3,4.5,6.4,3.4,7.7,3.4z M8.1,15.2c-2.1,0-4.1-1-5.4-2.5
+                        C3.4,10.6,5.4,9,7.7,9c2.6,0,4.7,1.9,5.1,4.4C11.6,14.5,9.9,15.2,8.1,15.2z"/>
+                    </svg>
+                </i>
+                    <eq name="Think.session.lang" value="1">
+                        Training 
+                    <else/>
+                        培训
+                    </eq>                    
+                </p>
+                <div class="f-training-department-img">
+                    <img class="left" src="assets/images/fantem-intranet-club-basketball.jpg" alt="">
+                </div>
+                <ul>
+                    <foreach name="secList" item="list">
+                        <li class="truncate avatar">
+                            <a href="<{:U('Train/down',array('sec_id'=>code($list['id'],1)))}>">
+                                <img class="circle" src="<{$Think.const.PUBLIC_URL}>Upload/<{$list.logo}>" alt=""/>
+                                <eq name="Think.session.lang" value="1">
+                                    <{$list.en_name}> 
+                                <else/>
+                                    <{$list.name}>
+                                </eq>                                
+                            </a>
+                        </li>
+                    </foreach>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m7">
+        <foreach name='lMode' item='lMode'>
+            <div class="card f-training-comprehensive-bloc">
+                <div class="card-content f-training-comprehensive-content">
+                    <p class="card-title"><i>
+                        <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 0 19 21">
+                            <path d="M13.9 5.6V1.5c0-0.8-0.7-1.5-1.5-1.5H1.5C0.7 0 0 0.7 0 1.5v12.9c0 0.8 0.7 1.5 1.5 1.5h5.1c0.2 0 0.4-0.2 0.4-0.4 0-0.2-0.2-0.4-0.4-0.4H1.5c-0.4 0-0.7-0.3-0.7-0.7V1.5c0-0.4 0.3-0.7 0.7-0.7h10.9c0.4 0 0.7 0.3 0.7 0.7v8.9H9.3c-0.5 0-0.9 0.4-0.9 0.9v4.1c0 0.3 0.1 0.5 0.3 0.5 0.1 0 0.2-0.1 0.4-0.2l4.6-4.6c0.1-0.1 0.2-0.2 0.2-0.3 0 0 0 0 0-0.1V5.7L13.9 5.6zM9.2 14.4v-3.1c0 0 0-0.1 0.1-0.1h3.2L9.2 14.4zM2.2 4.5h9.6c0.3 0 0.5-0.2 0.5-0.5s-0.2-0.5-0.5-0.5H2.2c-0.3 0-0.5 0.2-0.5 0.5S1.9 4.5 2.2 4.5zM2.2 8.1h9.6c0.1 0 0.2 0 0.3-0.1 0.1-0.1 0.1-0.2 0.1-0.3 0-0.3-0.2-0.5-0.5-0.5H2.2c-0.3 0-0.5 0.2-0.5 0.5S1.9 8.1 2.2 8.1z"
+                                  fill="#737373"/>
+                        </svg>
+                    </i>
+                        <eq name="Think.session.lang" value="1">
+                            <{$lMode.en_name}>
+                        <else/>
+                            <{$lMode.name}>
+                        </eq>                         
+                    </p>
+                    <div class="f-training-comprehensive-hot">
+                       
+                        <img width="180px" height="130px" class="left"
+                             src="<{$Think.const.PUBLIC_URL}>Upload/<{$lMode.img}>"
+                             alt="">
+                       
+                        <foreach name="lMode['desc_']" item='vo'>
+                            <p><{$vo}></p>
+                        </foreach>                        
+                    </div>
+                    <ul class="f-training-comprehensive-item">
+                        <foreach name="leDataList" item="lList">
+                             <if condition="$lList['t_id'] eq $lMode['id']">
+                                <for start="1" end="2">
+                                    <li><p><a href="<{:U('Train/dataDownload',array('id'=>code($lList['id'],1),'t_id'=>code($lList['t_id'],1)))}>">                                                
+                                                <eq name="Think.session.lang" value="1">
+                                                    <{$lList.en_title}>
+                                                <else/>
+                                                    <{$lList.title}>
+                                                </eq> 
+                                            </a></p>
+                                        <span>
+                                            <eq name="Think.session.lang" value="1">
+                                                <{$lList.en_desc_}>
+                                            <else/>
+                                                <{$lList.desc_}>
+                                            </eq> 
+                                        </span>
+                                    </li>
+                                 </for>
+                            </if>
+                        </foreach>  
+                    </ul>
+                    <p class="f-btn center">
+                        <a href="<{:U('Train/down',array('mod_id'=>code($lMode['id'],1)))}>">
+                            <button class="btn waves-effect waves-light f-btn-blue c-btn-bold" type="submit" name="action">
+                                <eq name="Think.session.lang" value="1">
+                                    SHOW MORE
+                                <else/>
+                                    显示更多
+                                </eq>                                
+                        </button></a></p>
+                    </p>
+                </div>
+            </div>
+        </foreach>
+    </div>
+    <div class="col s12 m5">
+        <foreach name="rMod" item="rMod">
+            <div class="card f-training-comprehensive-bloc">
+                <div class="card-content f-training-comprehensive-content">
+                    <p class="card-title"><i>
+                        <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 0 21 22">
+                            <path d="M8.6 6H1.9c-0.2 0-0.3 0.2-0.3 0.3s0.2 0.3 0.3 0.3h6.7c0.2 0 0.3-0.2 0.3-0.3S8.8 6 8.6 6zM8.6 9.5H1.9c-0.2 0-0.3 0.2-0.3 0.3s0.2 0.3 0.3 0.3h6.7c0.2 0 0.3-0.2 0.3-0.3S8.8 9.5 8.6 9.5zM8.6 13H1.9c-0.2 0-0.3 0.2-0.3 0.3s0.2 0.3 0.3 0.3h6.7c0.2 0 0.3-0.2 0.3-0.3S8.8 13 8.6 13zM13.7 0H1.3C0.6 0 0 0.6 0 1.3v14.1c0 0.7 0.6 1.3 1.3 1.3h12.5c0.7 0 1.3-0.6 1.3-1.3V1.3C15 0.6 14.4 0 13.7 0zM14.3 15.4c0 0.3-0.3 0.6-0.6 0.6H1.3c-0.3 0-0.6-0.3-0.6-0.6V1.3c0-0.3 0.3-0.6 0.6-0.6h12.5c0.3 0 0.6 0.3 0.6 0.6V15.4zM12.1 3.4c0 0-0.1 0-0.1 0 0 0-0.5 0-1 0 -0.6 0.1-0.8 0.5-0.8 0.8l0 0.9c0 0 0 0 0 0s0 0 0 0l0 6.4c0 0 0 0.1 0 0.1 0 0 0 0 0 0l0 0 0.8 1.9c0.1 0.1 0.2 0.2 0.3 0.2h0c0.1 0 0.3-0.1 0.3-0.2l0.9-1.9c0 0 0 0 0 0 0 0 0-0.1 0-0.1l0.1-6.5V5c0-0.2 0-0.7 0-0.9C12.7 3.7 12.2 3.4 12.1 3.4zM11.4 12.5l-0.3-0.7 0.6 0L11.4 12.5zM11.9 11.1l-0.9 0 0-5.7 1.1 0L11.9 11.1zM12 4.8l-1.1 0 0-0.5c0 0 0-0.1 0.2-0.1 0.3 0 0.7 0 0.8 0 0 0 0.1 0.1 0.1 0.1C12 4.3 12 4.5 12 4.8zM8.6 2.5H1.9c-0.2 0-0.3 0.2-0.3 0.3s0.2 0.3 0.3 0.3h6.7c0.2 0 0.3-0.2 0.3-0.3S8.8 2.5 8.6 2.5z"
+                                  fill="#737373"/>
+                        </svg>
+                    </i>
+                        <eq name="Think.session.lang" value="1">
+                            <{$rMod.en_name}>
+                        <else/>
+                            <{$rMod.name}>
+                        </eq> 
+                    </p>
+                    <div class="f-training-comprehensive-hot">
+                        <p><a href="#!"></a></p>
+                        <img width="180px" height="130px" class="left"
+                             src="<{$Think.const.PUBLIC_URL}>Upload/<{$rMod.img}>"
+                             alt="">
+                        <foreach name="rMod['desc_']" item='vo'>
+                            <p><{$vo}></p>
+                        </foreach>
+                    </div>
+                    <p class="f-btn center">
+                        <a href="<{:U('Train/down',array('mod_id'=>code($rMod['id'],1)))}>">
+                            <button class="btn waves-effect waves-light f-btn-blue c-btn-bold" type="submit" name="action">
+                                <eq name="Think.session.lang" value="1">
+                                    SHOW MORE
+                                <else/>
+                                    显示更多
+                                </eq>
+                            </button>
+                        </a></p>
+                    </p>
+                </div>
+            </div>
+        </foreach>
+    </div>
+<script src="<{$Think.const.JS_URL}>app.js"></script>
+<script src="<{$Think.const.JS_URL}>index.js"></script>
+<script>
+    
+    $("#showData").each(function () {  
+        $(this).click(function(){ 
+            window.location.href="__MODULE__/Train/index";
+         });
+      });
+      $("#showNews").each(function () {  
+        $(this).click(function(){ 
+            window.location.href="<?php echo U('Notice/indexNews',array('sign'=>code('3',1)))?>";
+         });
+      });
+</script>

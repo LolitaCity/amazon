@@ -1,0 +1,18 @@
+<div class="accordion" fillSpace="sidebar">                      
+    <div class="accordionContent">
+        <ul class="tree treeFolder">
+            <foreach name="oneNodeList" item='one'>
+                <li><a <notempty name="one['action']"> href="__MODULE__/<{$one.controller}>/<{$one.action}>" rel="<{$one.controller}>"  target="navTab" </notempty>><{$one.name}></a>
+                    <ul>
+                        <foreach name="twoNodeList" item='two'>
+                            <if condition="$two['p_id'] eq $one['id']" >
+                                <li><a href="__MODULE__/<{$two.controller}>/<{$two.action}>" rel="<{$two.controller}>"  target="navTab"><{$two.name}></a></li>
+                            </if>
+                        </foreach>
+                    </ul>
+                </li>
+
+            </foreach>                            
+        </ul>
+    </div>                    
+</div>

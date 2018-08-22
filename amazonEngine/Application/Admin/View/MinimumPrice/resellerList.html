@@ -1,0 +1,82 @@
+<include file="Public:pagerForm"/>
+<div class="pageHeader">
+    <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="__CONTROLLER__/resellerList" method="post">
+	<div class="searchBar">		
+            <table class="searchContent">
+                <tr>
+                    <td>
+                        Reseller name:<input type="text" name="reseller_company_name" value="<{$Think.post.reseller_company_name}>"/>
+                    </td>
+                    <td>
+                        Amazon shop:<input type="text" name="reseller_amazon_name" value="<{$Think.post.reseller_amazon_name}>"/>
+                    </td>
+                    <td>
+                        Contacts:<input type="text" name="reseller_contact_name" value="<{$Think.post.reseller_contact_name}>"/>
+                    </td>
+                    <td>
+                        Email:<input type="text" name="reseller_contact_email" value="<{$Think.post.reseller_contact_email}>"/>
+                    </td>
+                </tr>
+            </table>
+            <div class="subBar">
+                <ul>
+                    <li><div class="buttonActive"><div class="buttonContent"><button type="submit">Search</button></div></div></li>
+                </ul>
+            </div>
+	</div>
+    </form>
+</div>
+<div class="pageContent">
+    <div class="panelBar">
+        <ul class="toolBar">            
+            <li><a class="add" href="<{:U('MinimumPrice/show',array('sign'=>code('1',1),'db'=>code('Rreseller',1)))}>" target="dialog" mask="true" width='520' height='300'><span>Add</span></a></li>                      
+            <li><a title="Are you sure you want to delete?" target="selectedTodo" rel="id[]" href="__CONTROLLER__/del/db/<?php echo code('Reseller',1);?>" class="delete"><span>Batch delete</span></a></li>                  
+            <li><a class="edit" href="__CONTROLLER__/show/id/{l_id}/sign/<?php echo code('1',1);?>/db/<?php echo code('Reseller',1);?>" target="dialog" mask="true" warn="Place select a message" width='520' height='250'><span>Etid</span></a></li>
+            <li class="line">line</li>
+        </ul>
+    </div>
+    <table class="table" width="100%" layoutH="138">
+        <thead>
+            <tr>
+                <th width="22"><input type="checkbox" group="id[]" class="checkboxCtrl"></th>
+                <th width="60"  align="center">No.</th>
+                <th width="118" >Reseller name</th> 
+                <th width="118" >Amazon shop</th>
+                <th width="118" align="center">Contacts</th>
+                <th width="118" >Email</th>
+                <th width="118" orderField='add_time' <if condition="$_REQUEST['_order'] eq 'add_time'">class="<{$_REQUEST._sort}>"</if> align="center">Add time</th>
+                <th width="150" align="center">Operation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <foreach name='list' item="list">
+                <tr target="l_id" rel="<{$list.id}>">
+                    <td><input name="id[]" value="<{$list.id}>" type="checkbox"></td>
+                    <td><{$key+1}></td>
+                    <td><{$list.reseller_company_name}></td> 
+                    <td><{$list.reseller_amazon_name}></td> 
+                    <td><{$list.reseller_contact_name}></td> 
+                    <td><{$list.reseller_contact_email}></td> 
+                    <td><{$list.add_time}></td>
+                    <td>
+                        <a href="<{:U('MinimumPrice/show',array('id'=>code($list['id'],1),'sign'=>code('1',1),'db'=>code('Reseller',1)))}>" target="dialog" height="600" width="500"><span style='color:green'>Edit</span></a> | 
+                        <a title="Are you sure want to delete?" target="ajaxTodo" href="<{:U('MinimumPrice/del',array('id'=>code($list['id'],1),'db'=>code('Reseller',1)))}>" style='color:red'>Delete</a>                       
+                    </td>
+                </tr>
+            </foreach>
+        </tbody>        
+    </table>
+    <div class="panelBar">
+        <div class="pages">
+            <span>Show </span>
+            <select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+            </select>
+            <span> A total of <{$totalCount}></span>          
+        </div>
+        <div class="pagination" targetType="navTab" totalCount="<{$totalCount}>" numPerPage="<{$numPerPage}>" pageNumShown="6"  currentPage="<{$currentPage}>"></div>
+    </div>
+</div>

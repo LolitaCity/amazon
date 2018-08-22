@@ -1,0 +1,16 @@
+<div class="row f-banner-bloc">
+    <div class="col s12 l12">
+        <div class="swiper-container swiper-container-horizontal">
+            <div class="swiper-wrapper">
+                <foreach name='pList' item='list'>
+                    <div class="swiper-slide swiper-slide-prev" >
+                       <a <neq name="list['imgurl']" value=''> href="<{$list.imgurl|is_http}>"</neq> target="view_window">
+                            <img src="<{$Think.const.PUBLIC_URL}>Upload/<{$list.image}>" alt="" />
+                        </a>
+                    </div>
+                </foreach>
+            </div>
+            <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets"><span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
+        </div>
+    </div>
+</div>

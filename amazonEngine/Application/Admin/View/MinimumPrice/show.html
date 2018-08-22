@@ -1,0 +1,90 @@
+<div class="pageContent">	
+    <form method="post" action="__CONTROLLER__/edit?callbackType=closeCurrent" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+        <input type="hidden"  id='hidden'  name='id' value="<{$vo.id}>"/>
+            
+        <if condition='$_sign eq 1'>
+            <input type="hidden" name='db' value="Reseller"/>
+            <div class="pageFormContent" layoutH="58">  
+                
+                <div class="unit">
+                    <label>Reseller name:</label>
+                    <input type="text" name="reseller_company_name" size="40"  value="<{$vo.reseller_company_name}>" class='' />
+                </div>
+                <div class="unit">
+                    <label>Amazon shop:</label>
+                    <input type="text" name="reseller_amazon_name" size="40"  value="<{$vo.reseller_amazon_name}>" class='required' />
+                </div>
+                <div class="unit">
+                    <label>Contacts:</label>
+                    <input type="text" name="reseller_contact_name" size="40"  value="<{$vo.reseller_contact_name}>" class='required' />
+                </div>
+                <div class="unit">
+                    <label>Email:</label>
+                    <input type="text" name="reseller_contact_email" size="40"  value="<{$vo.reseller_contact_email}>" class='required email' />
+                </div>
+            </div>
+        <elseif condition="$_sign eq 2"/>
+            <input type="hidden" name='db' value="Productlist"/>
+            <div class="pageFormContent" layoutH="58">                
+                <div class="unit">
+                    <label style="width: 60px;">Product name:</label>
+                    <input type="text" name="name" size="30"  value="<{$vo.name}>" class='required' />
+                </div>
+                <div class="unit">
+                    <label style="width: 60px;">Product sku:</label>
+                    <input type="text" name="sku" size="30"  value="<{$vo.sku}>" class='required' />
+                </div>
+            </div>
+        <elseif condition="$_sign eq 3"/>
+            <input type="hidden"   name='db' value="Currency"/>
+            <div class="pageFormContent" layoutH="58">                
+                <div class="unit">
+                    <label style="width: 60px;">Currenry name:</label>
+                    <input type="text" name="name" size="20"  value="<{$vo.name}>" class='required' />
+                </div>
+                <div class="unit">
+                    <label style="width: 60px;">Currency symbol:</label>
+                    <input type="text" name="currency_symbol" size="20"  value="<{$vo.currency_symbol}>" class='required' />
+                </div>
+            </div>
+        <elseif condition="$_sign eq 6"/>
+            <input type="hidden"  name='db' value="ProductUrlList"/>
+            <div class="pageFormContent" layoutH="58">                
+                <div class="unit">
+                    <label style="width: 60px;">Url:</label>
+                    <input type="text" name="product_url" size="40"  value="<{$vo.product_url}>" class='required url' />
+                </div>
+            </div>            
+        <elseif condition="$_sign eq 4"/>
+            <input type="hidden"  name='db' value="MinimumPrice"/>
+            <div class="pageFormContent" layoutH="58"> 
+                <div class="unit">
+                    <label style="width: 60px;">Product name:</label>
+                    <select class="" name="product_name" style="width: 320px;">
+                        <foreach name="productList" item='plist'>
+                            <option value="<{$plist['name']}>" <if condition="$plist['name'] eq $vo['product_name']">selected</if>><{$plist.name}></option>                           
+                        </foreach>
+                    </select>
+                </div>
+                <div class="unit">
+                    <label style="width: 60px;">Currency symbol:</label>
+                    <select class="" name="currency" style="width: 120px;">
+                        <foreach name="currencyList" item='clist'>
+                            <option value="<{$clist['currency_symbol']}>" <if condition="$clist['currency_symbol'] eq $vo['currency']">selected</if>><{$clist.currency_symbol}></option>                           
+                        </foreach>
+                    </select>
+                </div>
+                 <div class="unit">
+                    <label style="width: 60px;">Minimum selling price:</label>
+                    <input type="text" name="minimum_price" size="17"  value="<{$vo.minimum_price}>" class='number required' />
+                </div>
+            </div> 
+        </if>
+        <div class="formBar">
+            <ul>
+                <li><div class="buttonActive"><div class="buttonContent"><button type="submit">Submit</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">Cancel</button></div></div></li>
+            </ul>
+        </div>
+    </form>	
+</div>

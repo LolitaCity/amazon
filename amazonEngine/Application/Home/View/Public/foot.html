@@ -1,0 +1,292 @@
+ 
+<div class="col s12 m4">
+    <div class="f-right-slider-bloc">
+
+        <div class="f-polls-bloc">
+            <div class="card f-polls">
+                <div class="card-content f-content" id="js-f-polls">
+                    <p class="card-title f-title"><i>
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             preserveAspectRatio="xMidYMid" viewBox="0 0 18 15">
+                            <path fill="#737373" d="M1.777,0C0.796,0,0,0.795,0,1.778c0,0.981,0.796,1.777,1.777,1.777s1.777-0.796,1.777-1.777
+                    C3.555,0.795,2.759,0,1.777,0z M1.777,5.506C0.796,5.506,0,6.302,0,7.284c0,0.981,0.796,1.777,1.777,1.777
+                    s1.777-0.796,1.777-1.777C3.555,6.302,2.759,5.506,1.777,5.506z M1.777,11.013C0.796,11.013,0,11.809,0,12.791
+                    c0,0.98,0.796,1.776,1.777,1.776s1.777-0.796,1.777-1.776C3.555,11.809,2.759,11.013,1.777,11.013z M5.336,14.567h5.903v-3.554
+                    H5.336V14.567z M5.336,9.061h9.598V5.506H5.336V9.061z M5.336,0v3.555h11.807V0H5.336z"/>
+                        </svg>
+                    </i>
+                        <eq name="Think.session.lang" value="1">
+                            Polls
+                        <else/>
+                            民意调查
+                        </eq>
+                    </p>
+                    <form action="" method="post" id="myForm">
+                        <h5>
+                            <eq name="Think.session.lang" value="1">
+                                <{$examen.en_question}>
+                            <else/>
+                                <{$examen.question}>
+                            </eq>
+                        </h5>
+                        <input type="hidden" id="exa_id" value="<{$examen.id}>" >
+                        <input type="hidden" id="user_id" value="<{$_SESSION['home']['id']}>">
+                        <input type="hidden" id='answer_id' value=''>
+                        <?php $i=1;?>
+                        <foreach name="answerList" item="answerList">
+                            <p>
+                                <input class="with-gap" onclick="clickData(this)" name="group1" type="radio" id="test<?php echo $i;?>"  value="<{$answerList.id}>">
+                                <label for="test<?php echo $i;?>">
+                                    <eq name="Think.session.lang" value="1">
+                                        <{$answerList.en_answer}>
+                                    <else/>
+                                        <{$answerList.answer}>
+                                    </eq>
+                                </label>
+                                <neq name="answerList['image']" value=''>
+                                    <span>(image)</span>
+                                    <img src="<{$Think.const.PUBLIC_URL}>Upload/<{$answerList.image}>" alt=""/>
+                                </neq>
+                            </p>
+                            <foreach name="stat_ropo" item="sRopo">
+                                <eq name="sRopo['ans_id']" value="$answerList['id']">
+                                    <div class="progress-container">
+                                        <div class="progress">
+                                            <div class="determinate" style="width:<{$sRopo.ans_id_roportion}>"><{$sRopo.ans_id_roportion}></div>
+                                        </div>
+                                    </div>
+                                </eq>
+                            </foreach>
+                            <?php $i++;?>
+                        </foreach>                         
+                    </form>
+                </div>
+                <p class="f-btn center">
+                    <button class="btn waves-effect waves-light f-btn-blue c-font-bold" type="submit" name="action" id="but">
+                        <eq name="Think.session.lang" value="1">
+                            VOTE
+                        <else/>
+                           投票
+                        </eq>                        
+                    </button>
+                </p>
+            </div>
+        </div>
+
+        <div class="f-news-bloc">
+            <div class="card f-news">
+                <div class="card-content">
+                    <p class="card-title f-title"><i>
+                        <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" width="22" height="17">
+                            <path fill="#737373" d="M9.362,9.955h5.689v-1.23H9.362V9.955z M2.529,13.057h5.594V6.852H2.529V13.057z M9.362,
+                                                      12.653h4.455v-1.23H9.362V12.653z M9.362,7.468h5.689V6.237H9.362V7.468z M17.573,
+                                                      2.97V0H0v13.964c0,1.642,1.335,2.977,2.976,2.977h14.433c1.641,0,2.976-1.335,
+                                                      2.976-2.977V2.97H17.573z M16.573,13.964c0,1.09-0.887,1.977-1.976,1.977H2.976C1.887,
+                                                      15.941,1,15.054,1,13.964V1h15.573V13.964z M19.385,13.964c0,1.09-0.886,1.977-1.976,
+                                                      1.977h-0.604c0.472-0.527,0.768-1.215,0.768-1.977V3.97h1.812V13.964z M15.052,
+                                                      3.968H2.521v1.23h12.53V3.968z">
+                            </path>
+                        </svg>
+                    </i>
+                        <eq name="Think.session.lang" value="1">
+                            Fantem in News 
+                        <else/>
+                           外部新闻
+                        </eq>
+                    </p>
+                    <ul>
+                        <foreach name="newsList" item="newsList">
+                            <li class="card-action">
+                                <a href="<{$newsList.id|code=1|getUrl}>" target="view_window">
+                                    <h5>
+                                        <eq name="Think.session.lang" value="1">
+                                            <{$newsList.en_title}> 
+                                        <else/>
+                                           <{$newsList.title}>
+                                        </eq>
+                                    </h5>
+                                    <P>
+                                        <eq name="Think.session.lang" value="1">
+                                            <{$newsList.en_content|getText}>
+                                        <else/>
+                                            <{$newsList.content|getText}>
+                                        </eq>
+                                    </P>
+                                </a>
+                            </li>
+                        </foreach>
+                       
+                    </ul>
+                </div>
+                <p class="f-btn center">
+                    <button class="btn waves-effect waves-light f-btn-blue c-btn-bold" type="submit" name="action" id="showNews">
+                        <eq name="Think.session.lang" value="1">
+                            SHOW MORE
+                        <else/>
+                            显示更多
+                        </eq>                        
+                    </button>
+                </p>
+            </div>
+        </div>
+
+
+        <div class="f-traning-bloc">
+            <div class="card f-traning">
+                <div class="card-content">
+                    <p class="card-title f-title"><i>
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             preserveAspectRatio="xMidYMid" viewBox="0 0 17 14">
+                            <path fill="#737373" d="M4.058,6.399c1.335,0,2.418-1.083,2.418-2.418c0-1.336-1.083-2.419-2.418-2.419
+                    c-1.336,0-2.418,1.083-2.418,2.419C1.64,5.316,2.722,6.399,4.058,6.399z M6.651,0v7.12C6.117,6.93,5.546,6.817,4.946,6.817
+                    C2.603,6.817,0.645,8.399,0,10.56c1.301,1.506,3.22,2.463,5.365,2.463c1.711,0,3.272-0.616,4.497-1.625
+                    c0.26-0.168,0.473-0.414,0.59-0.725l0.331-0.883h5.372V0H6.651z M15.155,8.789h-3.997l0.445-1.188
+                    c0.16-0.426,0.105-0.878-0.1-1.249l1.804-4.281L12.58,1.765l-1.682,3.992c-0.056-0.03-0.111-0.062-0.172-0.085
+                    C9.954,5.381,9.085,5.775,8.795,6.548L8.239,8.03C8.053,7.873,7.858,7.728,7.651,7.599V1h7.504V8.789z"/>
+                        </svg>
+                    </i>
+                        <eq name="Think.session.lang" value="1">
+                             Training 
+                        <else/>
+                            培训
+                        </eq>                        
+                    </p>
+                    <ul>
+                        <foreach name="dList" item="dataList">
+                            <li class="card-action">
+                                <a href="<{:U('Train/dataDownload',array('id'=>code($dataList['id'],1),'t_id'=>code($dataList['t_id'],1),'sign'=>code('2',1)))}>"><h5>
+                                        <eq name="Think.session.lang" value="1">
+                                            <{$dataList.en_title}> 
+                                        <else/>
+                                           <{$dataList.title}>
+                                        </eq>                                         
+                                    </h5>
+                                    <P>
+                                        <eq name="Think.session.lang" value="1">
+                                            <{$dataList.en_desc|getText}> 
+                                        <else/>
+                                           <{$dataList.desc|getText}>
+                                        </eq> 
+                                    </P></a>
+                            </li>
+                        </foreach>
+                    </ul>
+                </div>
+                <p class="f-btn center">
+                    <button class="btn waves-effect waves-light f-btn-blue c-btn-bold" type="submit" name="action" id="showData">
+                        <eq name="Think.session.lang" value="1">
+                            SHOW MORE
+                        <else/>
+                           显示更多
+                        </eq>
+                    </button>
+                </p>
+            </div>
+        </div>        
+    </div>
+</div>
+</main>
+</div>
+    <!-- f-footer-bloc -->
+    <footer class="f-footer-bloc">
+        <div class="about">
+            <p class="first-child"><i>
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="14" height="14" viewBox="0 0 14 14">
+                    <path fill="#FAFAFA" d="M9.359,3.023c0.008-0.009,0.016-0.019,0.025-0.028c0.03-0.034,0.06-0.066,0.09-0.096
+    			c0.543-0.56,1.302-0.795,1.976-0.537c0.158,0.061,0.3,0.146,0.427,0.249c-1.053-1.432-2.281-0.94-2.599-0.779
+    			C8.236,2.407,7.605,3.974,7.153,6.933c-0.004,0.031-0.43,2.854-1.101,4.02l-0.008,0.014c-0.006,0.012-0.609,1.114-1.743,1.379
+    			c-0.259,0.06-0.477,0.089-0.685,0.089c-1.46,0-2.648-1.188-2.648-2.648c0-0.875,0.427-1.652,1.084-2.135
+    			c0.019-0.018,0.033-0.028,0.033-0.028C3.149,6.83,4.354,6.956,4.718,7.018l0.008-0.021c0.035-0.195,0.069-0.4,0.102-0.616
+    			C4.439,6.242,4.032,6.171,3.615,6.171C1.622,6.171,0,7.793,0,9.787c0,1.994,1.622,3.616,3.615,3.616
+    			c0.28,0,0.576-0.038,0.906-0.115c1.51-0.354,2.284-1.696,2.371-1.854c0.763-1.326,1.2-4.234,1.219-4.357
+    			c0.239-1.563,0.51-2.593,0.8-3.272c0.005-0.013,0.008-0.025,0.013-0.039c0.1-0.26,0.236-0.493,0.398-0.694
+    			C9.333,3.056,9.346,3.039,9.359,3.023z M10.158,0c-0.28,0-0.576,0.037-0.905,0.114c-1.527,0.357-2.301,1.725-2.374,1.86
+    			c-0.76,1.328-1.203,4.228-1.221,4.351C5.23,9.122,4.7,10.222,4.149,10.633c-0.535,0.496-1.249,0.695-1.888,0.451
+    			c-0.203-0.078-0.38-0.196-0.532-0.342c0.351,0.519,1.261,1.504,2.797,0.805c0,0,0.053-0.031,0.131-0.077
+    			c0.943-0.646,1.53-2.199,1.958-5C6.619,6.44,7.05,3.617,7.722,2.45l0.008-0.014c0.006-0.012,0.609-1.114,1.744-1.38
+    			c0.26-0.06,0.477-0.088,0.685-0.088c1.46,0,2.648,1.188,2.648,2.647c0,0.943-0.496,1.772-1.24,2.241
+    			C10.702,6.516,9.494,6.4,9.076,6.335C9.063,6.418,9.055,6.467,9.055,6.47c-0.03,0.192-0.06,0.378-0.091,0.559
+    			c0.382,0.134,0.783,0.202,1.193,0.202c1.994,0,3.616-1.622,3.616-3.616S12.152,0,10.158,0z"/>
+                </svg>
+    
+            </i>
+                <eq name="Think.session.lang" value="1">
+                    ABOUT
+                <else/>
+                    关于
+                </eq>
+            </p>
+            <p>
+                <eq name="Think.session.lang" value="1">
+                    <{$webInfo.en_copyright}>
+                <else/>
+                    <{$webInfo.copyright}>
+                </eq>
+            </p>
+        </div>
+        <div class="copyright center"><p>©Fantem Technologies 2016.All Rights Reserved</p></div>
+    </footer>
+</section>
+
+
+<!-- f-slider-wapper-show -->
+
+<span class="f-slider-wapper-show center" id="js-f-slider-wapper-show">
+    <svg xmlns="http://www.w3.org/2000/svg"
+         preserveAspectRatio="xMidYMid" viewBox="0 0 20 20">
+        <path fill="#FFFFFF" d="M9.702,0C4.353,0,0,4.352,0,9.702s4.354,9.702,9.702,9.702c5.35,0,9.702-4.353,9.702-9.702
+			S15.051,0,9.702,0z M9.702,18.404C4.904,18.404,1,14.501,1,9.702S4.904,1,9.702,1s8.702,3.904,8.702,8.702
+			S14.5,18.404,9.702,18.404z M10.228,5.242H9.177v3.934H5.243v1.053h3.934v3.932h1.052v-3.932h3.933V9.176h-3.933V5.242z"/>
+    </svg>
+</span>
+</body>
+<script src="<{$Think.const.JS_URL}>app.js"></script>
+<script src="<{$Think.const.JS_URL}>index.js"></script>
+<script>
+    $("#but").click(function(){
+        var exa_id      =$("#exa_id").val();
+        var answer_id   =$("#answer_id").val();
+        var user_id     =$("#user_id").val();
+        if(answer_id=='' || answer_id==0){
+            if("<?php echo $_SESSION['lang'];?>"=='1'){
+                alert("Please choose an answer.");
+            }else{
+                alert("请选择一个答案");
+            }
+            return false;
+        }
+        $.post("__MODULE__/Allow/ajaxExa",{exa_id:exa_id,answer_id:answer_id,user_id:user_id},function(data){
+            
+            if(data==true){
+                if("<?php echo $_SESSION['lang'];?>"=='1'){
+                    alert("Vote for success,thank you for your participation");
+                }else{
+                    alert("投票成功，感谢您的参与");
+                }
+                location.reload();
+            }else{
+                if("<?php echo $_SESSION['lang'];?>"=='1'){
+                    alert("You have already voted in this poll.");
+                }else{
+                    alert('您已参与过投票，请勿重复参与');
+                }
+            }
+        });
+    });
+    $("#showData").each(function () {  
+        $(this).click(function(){ 
+            window.location.href="__MODULE__/Train/index";
+         });
+      });
+      $("#showNews").each(function () {  
+        $(this).click(function(){ 
+            window.location.href="<?php echo U('Notice/indexNews',array('sign'=>code('3',1)))?>";
+         });
+      });
+    function clickData(obj){
+        var exaVal=$ (obj).val();
+        $("#answer_id").val(exaVal);
+    }
+</script>
+</html>

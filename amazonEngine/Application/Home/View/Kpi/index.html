@@ -1,0 +1,256 @@
+<include file="Public/header"/>
+<div class="row">
+<div class="col s12 m8">
+    <div class="f-user-kpi-bloc">
+        <div class="card f-user-kpi">
+            <div class="card-content">
+                <p class="card-title"><i>
+                    <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 0 20 20">
+                        <path d="M12.5 3.1H6.6c-1.2 0-2.1 1-2.1 2.1V13c0 1.2 1 2.1 2.1 2.1h5.9c1.2 0 2.1-1 2.1-2.1V5.2C14.7 4.1 13.7 3.1 12.5 3.1zM13.7 13c0 0.6-0.5 1.1-1.1 1.1H6.6c-0.6 0-1.1-0.5-1.1-1.1V5.2c0-0.6 0.5-1.1 1.1-1.1h5.9c0.6 0 1.1 0.5 1.1 1.1V13zM1 9.9V2.1C1 1.5 1.5 1 2.1 1h5.9c0.6 0 1.1 0.5 1.1 1.1h1C10.2 1 9.2 0 8 0H2.1C1 0 0 1 0 2.1v7.8c0 1.2 1 2.1 2.1 2.1h1v-1h-0.9C1.5 11 1 10.5 1 9.9z"
+                              fill="#787777"></path>
+                    </svg>
+                </i>KPI
+                </p>
+                
+                
+                <div class="f-user-kpi-detail-bloc">
+                    <div class="card f-user-kpi-detail">
+                        <div class="card-content">
+                            <div class="f-user-kpi-detail-info-container">
+                                <table class="f-user-kpi-detail-info">
+                                    <thead>
+                                        <eq name="Think.session.lang" value="1">
+                                            <tr>
+                                                <td>Subjects</td>
+                                                <td>Scoring Detailed Regulations and Standards</td>
+                                                <td>Percentage</td>
+                                                <td>Self-assessment</td>
+                                                <td>Higher-Up assessment</td>
+                                                <td>Total Score</td>
+                                            </tr>
+                                        <else/>
+                                            <tr>
+                                                <td>项目</td>
+                                                <td>描述</td>
+                                                <td>权重</td>
+                                                <td>自评分</td>
+                                                <td>上司评分</td>
+                                                <td>综合评分</td>
+                                            </tr>
+                                        </eq>   
+                                    </thead>
+                                    <tbody>
+                                    <tr style="height:0px">
+                                        <td height="0"></td>
+                                        <td height="0"></td>
+                                        <td height="0"></td>
+                                        <td height="0"></td>
+                                        <td height="0"></td>
+                                        <td rowspan="<{$taskNum+1}>"><{$kpiInfo.total_score}></td>
+                                    </tr>
+                                        <?php $i=1;?> 
+                                        <foreach name="kpiTasks" item="kpiTasks">
+                                            <tr id="tr">
+                                                <input type="hidden" name="id_<{$i}>" value="<{$kpiTasks.id}>">
+                                                <td><{$kpiTasks.subjects}></td>
+                                                <td><{$kpiTasks.modification_record}></td>
+                                                <td width="100px"><{$kpiTasks.percentage}></td>
+                                                <td width="100px">
+                                                    <input type="text" name="self_assessment<{$i}>" placeholder="" maxlength="3" value="<{$kpiTasks.self_assessment}>" <neq name="kpiTasks['self_assessment']" value=''>readonly="readonly"</neq>>
+                                                </td>
+                                                <td width="100px"><{$kpiTasks.higher_upassessment}></td>
+                                            </tr> 
+                                            <?php $i++;?>
+                                        </foreach>                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="f-btn center">
+                                <button class="btn waves-effect waves-light f-btn-blue c-font-bold f-btn-small modal-close" type="submit" name="action" id='sub_'>
+                                    <eq name="Think.session.lang" value="1">
+                                        SUBMIT
+                                    <else/>
+                                        提交
+                                    </eq>
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+                
+                
+                <!--
+                <div class="f-user-kpi-detail-bloc">
+                    <div class="card f-user-kpi-detail">
+                        <div class="card-content">
+                            <div class="f-user-kpi-detail-info-container">
+                                <table class="f-user-kpi-detail-info">
+                                    <thead>
+                                        <eq name="Think.session.lang" value="1">
+                                            <tr>
+                                                <td>Subjects</td>
+                                                <td>Scoring Detailed Regulations and Standards</td>
+                                                <td>Percentage</td>
+                                                <td>Self-assessment</td>
+                                                <td>Higher-Up assessment</td>
+                                                <td>Total Score</td>
+                                            </tr>
+                                        <else/>
+                                            <tr>
+                                                <td>项目</td>
+                                                <td>描述</td>
+                                                <td>权重</td>
+                                                <td>自评分</td>
+                                                <td>上司评分</td>
+                                                <td>综合评分</td>
+                                            </tr>
+                                        </eq>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="height:0px">
+                                            <td height="0"></td>
+                                            <td height="0"></td>
+                                            <td height="0"></td>
+                                            <td height="0"></td>
+                                            <td height="0"></td>
+                                            <td rowspan="<{$taskNum+1}>"><{$kpiInfo.total_score}></td>
+                                        </tr>
+                                        <?php $i=1;?>                                   
+                                        <foreach name="kpiTasks" item="kpiTasks">
+                                            <tr id="tr">
+                                                <input type="hidden" name="id_<{$i}>" value="<{$kpiTasks.id}>">
+                                                <td><{$kpiTasks.subjects}></td>
+                                                <td><{$kpiTasks.modification_record}></td>
+                                                <td width="100px"><{$kpiTasks.percentage}></td>
+                                                <td width="100px">
+                                                    <input type="text" name="self_assessment<{$i}>" placeholder="" maxlength="3" value="<{$kpiTasks.self_assessment}>" <neq name="kpiTasks['self_assessment']" value=''>readonly="readonly"</neq>>
+                                                </td>
+                                                <td width="100px"><{$kpiTasks.higher_upassessment}></td>                                                
+                                            </tr>
+                                            <?php $i++;?>
+                                        </foreach>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="f-btn center">
+                                <button class="btn waves-effect waves-light f-btn-blue c-font-bold f-btn-small modal-close" type="submit" name="action" id='sub_'>
+                                    <eq name="Think.session.lang" value="1">
+                                        SUBMIT
+                                    <else/>
+                                        提交
+                                    </eq>
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                -->
+                <input type="hidden" name='kpi_id' value="<{$kpi_id}>"/>
+                <script>
+                    $(function(){
+                        $("#sub_").click(function(){
+                            //var kpi_id  =$("input[name='kpi_id']").val();
+                            var length  =$('tbody').find('input').length;
+                            var kpi_id  =$("input[name='kpi_id']").val();
+                            var arr     =new Array();
+                            var idarr   =new Array();
+                            for(var i=1;i<=length;i++){
+                                if($("input[name='self_assessment"+i+"']").val() !=''){
+                                    if($("input[name='self_assessment"+i+"']").val()>5 ||$("input[name='self_assessment"+i+"']").val()<0){
+                                        if("<?php echo $_SESSION['lang'];?>"=='1'){
+                                            alert("Please fill in the 0-5 score");
+                                            return false;
+                                        }else{                                    
+                                            alert("请填写0-5的分数");
+                                            return false;
+                                        }
+                                    }else{
+                                        arr.push($("input[name='self_assessment"+i+"']").val());
+                                        idarr.push($("input[name='id_"+i+"']").val())
+                                    }
+                                }else{
+                                    if("<?php echo $_SESSION['lang'];?>"=='1'){
+                                        alert("Score cannot be empty");
+                                        return false;
+                                    }else{                                    
+                                        alert("分数不能为空");
+                                        return false;
+                                    }
+                                }
+                            }
+                            $.post("__CONTROLLER__/jsonTasks",{arr:arr,idarr:idarr,kpi_id:kpi_id},function(data){
+                                
+                                if(data==1){
+                                    if("<?php echo $_SESSION['lang'];?>"=='1'){
+                                        alert("Assessment submitted to success");
+                                    }else{                                    
+                                        alert("考核提交成功");
+                                    }
+                                    for(var i=1;i<=length;i++){
+                                        $("input[name='self_assessment"+i+"']").attr("disabled",true);                                               
+                                    }
+                                }else if(data==2){
+                                    if("<?php echo $_SESSION['lang'];?>"=='1'){
+                                        alert("Submission failed");
+                                    }else{                                    
+                                        alert("考核提交失败");
+                                    }
+                                }else if(data==3){
+                                    if("<?php echo $_SESSION['lang'];?>"=='1'){
+                                        alert("Self comment, please do not repeat");
+                                    }else{                                    
+                                        alert("已经自评，请勿重复提交");
+                                    }
+                                }
+                            },"json");
+                        });
+                    });
+                </script>
+                <div class="f-user-kpi-item-container">  
+                    <table class="f-user-kpi-item highlight center">
+                        <thead>
+                            <eq name="Think.session.lang" value="1">
+                                <tr>
+                                    <td data-field="time">Quarter</td>
+                                    <td data-field="achievement">Achievement</td>
+                                    <td data-field="higher-up">Higher-Up</td>
+                                </tr>
+                            <else/>
+                                <tr>
+                                    <td data-field="time">季度</td>
+                                    <td data-field="achievement">分数</td>
+                                    <td data-field="higher-up">评分人</td>
+                                </tr>
+                            </eq>
+                        </thead>
+                        <tbody>
+                            <foreach name="kpiList" item="kpiList">
+                                <tr>
+                                    <td><a href="user-kpi-detail.html"><{$kpiList.quarter}></a></td>
+                                    <td width="180px">
+                                        <neq name="kpiList['total_score']" value='0'>
+                                            <{$kpiList.total_score}>
+                                        </neq>
+                                    </td>
+                                    <td width="200px"><{$kpiList.assign_id|getUsername}></td>
+                                </tr> 
+                            </foreach>
+                        </tbody>
+                    </table>
+                    <notempty name="kpiList">
+                        <div class="center f-pagination-bloc">
+                            <ul class="pagination f-pagination">
+                               <{$pageList}>
+                            </ul>
+                        </div>
+                    </notempty>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--中间end-->
+<include file='Public/foot'/>

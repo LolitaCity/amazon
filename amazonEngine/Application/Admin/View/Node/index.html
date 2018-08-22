@@ -1,0 +1,101 @@
+<include file="Public:pagerForm"/>
+<div class="pageHeader">
+    <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="__CONTROLLER__/index" method="post">
+	<div class="searchBar">		
+            <table class="searchContent">
+                <tr>
+                    <td>
+                        节点名：<input type="text" name="name" value="<{$Think.post.name}>"/>
+                    </td>
+                    <td>
+                        <select class="combox" name="p_id">
+                            <option value="">父节点</option>
+                            <foreach name="topNoList" item="topNoList">
+                                <option value="<{$topNoList.id}>" <if condition="$Think.post.p_id eq $topNoList['id']">selected</if>><{$topNoList.name}></option>
+                            </foreach>
+                        </select>
+                    </td>
+                    <td>
+                        添加时间：<input type="text" name="add_time" class="date" readonly="true" value="<{$Think.post.add_time}>"/>
+                    </td>
+                </tr>
+            </table>
+            <div class="subBar">
+                <ul>
+                    <li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
+                </ul>
+            </div>
+	</div>
+    </form>
+</div>
+<div class="pageContent">
+    <div class="panelBar">
+        <ul class="toolBar">            
+            <li><a class="add" href="__CONTROLLER__/show" target="dialog" mask="true"><span>添加</span></a></li>                      
+            <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="id[]" href="__CONTROLLER__/del" class="delete"><span>批量删除</span></a></li>                  
+            <li><a class="edit" href="__CONTROLLER__/show/id/{l_id}" target="dialog" mask="true" warn="请选择一条信息"><span>修改</span></a></li>
+            <li class="line">line</li>
+        </ul>
+    </div>
+    <table class="table" width="100%" layoutH="138">
+        <thead>
+            <tr>
+                <th width="22"><input type="checkbox" group="id[]" class="checkboxCtrl"></th>
+                <th width="80"  align="center">序号</th>
+                <th width="120" >节点名称</th>
+                <th width="200" >控制器</th>
+                <th width="100" >方法</th>
+                <th width="100" orderField="level" align="center" <if condition="$_REQUEST['_order'] eq 'level'">class="<{$_REQUEST._sort}>"</if>>层级</th>
+                <th width="100" orderField="sort_" align="center" <if condition="$_REQUEST['_order'] eq 'sort_'">class="<{$_REQUEST._sort}>"</if>>排序</th>
+                <th width="80"  orderField='p_id' <if condition="$_REQUEST['_order'] eq 'p_id'">class="<{$_REQUEST._sort}>"</if> align="center">父节点</th>
+                <th width="80"  orderField='add_time' <if condition="$_REQUEST['_order'] eq 'add_time'">class="<{$_REQUEST._sort}>"</if> align="center">添加时间</th>
+                <th width="100" align="center">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php $i=1;?> 
+            <foreach name='list' item="list">
+                <tr target="l_id" rel="<{$list.id}>">
+                <td><input name="id[]" value="<{$list.id}>" type="checkbox"></td>
+                <td><{$key+1}></td>
+                <td>
+                    <if condition="$list.level eq 0">
+                        <div style='color:blue'><{$list.name}></div>
+                    <else/>
+                        <div style='color:green'>--<{$list.name}></div>
+                    </if>
+                </td>
+                <td><{$list.controller}></td>
+                <td><{$list.action}></td>
+                <td>
+                    <eq name="list['level']" value='0'>
+                        <div style='color:blue'>顶级节点</div>
+                    <else/>
+                        <div style='color:green'>次级节点</div>
+                    </eq>
+                </td>
+                <td><{$list.sort_}></td>
+                <td><{$list.p_id|getNodeName}></td>
+                <td><{$list.add_time|substr=0,10}></td>           
+                <td>
+                    <a title="确定删除该记录" target="ajaxTodo" href="<{:U('Node/del',array('id'=>code($list['id'],1)))}>" style='color: red'>删除</a>                       
+                </td>
+            </tr>
+            <?php $i++;?>
+            </foreach>
+        </tbody>        
+    </table>
+    <div class="panelBar">
+        <div class="pages">
+            <span>显示</span>
+            <select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+            </select>
+            <span>条，共<{$totalCount}>条</span>          
+        </div>
+        <div class="pagination" targetType="navTab" totalCount="<{$totalCount}>" numPerPage="<{$numPerPage}>" pageNumShown="6"  currentPage="<{$currentPage}>"></div>
+    </div>
+</div>

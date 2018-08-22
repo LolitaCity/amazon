@@ -1,0 +1,195 @@
+<include file="Public/header"/>
+<div class="row">
+    <div class="col s12 m8">
+        <div class="f-events-and-clubs-detail-bloc">
+            <neq name='group_id' value=''>
+                <eq name='type' value='1'>
+                    <include file="Club/clubInfo"/>
+                <else/>
+                    <include file="Section/secInfo"/>                
+                </eq>
+            </neq>   
+        </div>
+        <div class="card f-events-bloc">
+            <div class="card-content">                            
+                <div class="modal f-modal-bloc" id="modal2">
+                    <div class="modal-content f-modal">
+                        <h4>
+                        <eq name="Think.session.lang" value="1">
+                            Events Launch
+                        <else/>
+                            发起活动
+                        </eq>
+                        </h4>
+                        <form method="post" action="<{:U('Club/addActivity')}>" id='active'>
+                            <input type="hidden" name="type" value="<{$type}>"/>
+                            <neq name='group_id' value=''>
+                                <input type="hidden" name='group_id' value="<{$group_id}>"/>
+                            </neq>
+                            <div class="row">
+                                <div class="input-field col m6 s12">
+                                    <input id="title" type="text" class="validate" name='title'>
+                                    <label for="title">
+                                        <eq name="Think.session.lang" value="1">
+                                            Title
+                                        <else/>
+                                            主题
+                                        </eq>
+                                    </label>
+                                </div>  
+                                <div class="input-field col s12 m6">
+                                    <input id="datetime" type="text" class="validate" name="validity" placeholder='2016-07-26'>
+                                    <label for="datetime">
+                                        <eq name="Think.session.lang" value="1">
+                                            Time
+                                        <else/>
+                                            时间
+                                        </eq>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea id="textarea1" class="materialize-textarea" length="120" name='content'></textarea>
+                                    <label for="textarea1" class="">
+                                        <eq name="Think.session.lang" value="1">
+                                            Textarea
+                                        <else/>
+                                            内容
+                                        </eq>
+                                    </label>
+                                    <span class="character-counter" style="float: right; font-size: 12px; height: 1px;"></span>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="modal-footer">
+                            <p class="f-btn center">
+                                <button class="btn waves-effect waves-light f-btn-blue c-font-bold f-btn-small modal-close"  name="action" id="sub">
+                                    <eq name="Think.session.lang" value="1">
+                                        SUBMIT
+                                    <else/>
+                                        提交
+                                    </eq>                                    
+                                </button>
+                                <button class="btn waves-effect waves-light f-btn-blue c-font-bold f-btn-small modal-close"  name="action">
+                                    <eq name="Think.session.lang" value="1">
+                                        CANCEL
+                                    <else/>
+                                        取消
+                                    </eq>
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    $(function(){
+                        $("#sub").click(function(){
+                            var name    =$("input[name='title']").val();
+                            alert($("input[name='validity']").val());
+                            var validity= Date.parse(new Date($("input[name='validity']").val()));
+                            if(name==''){
+                                if("<?php echo $_SESSION['lang'];?>"=='1'){
+                                    alert("Activity theme can not be empty");
+                                    return false;
+                                }else{
+                                    alert("活动主题不能为空");
+                                    return false;
+                                }
+                            }
+                            if(validity==''){
+                                if("<?php echo $_SESSION['lang'];?>"=='1'){
+                                    alert("Activity time can not be empty");
+                                    return false;
+                                }else{
+                                    alert('活动时间不能为空');
+                                    return false;
+                                }
+                            }else if(!validity){
+                                if("<?php echo $_SESSION['lang'];?>"=='1'){
+                                    alert("Active time format is not correct");
+                                    return false;
+                                }else{
+                                    alert("活动时间格式不正确");
+                                    return false;
+                                }
+                            }
+                            $("#active").submit();
+                        });
+                    });                
+                </script>
+                <div>
+                    <table class="f-events highlight responsive-table centered ">
+                        <thead>
+                        <tr>
+                            <th data-field="id" class="left">
+                                <eq name="Think.session.lang" value="1">
+                                    Activities
+                                <else/>
+                                    活动
+                                </eq>
+                                <a href="#modal2" class="modal-trigger f-events-title-launch-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid"
+                                     viewBox="0 0 24 24">
+                                    <path d="M17.9 8.4h-7.5V0.9C10.4 0.4 10 0 9.5 0H9.3C8.8 0 8.4 0.4 8.4 0.9v7.5H0.9C0.4 8.4 0 8.8 0 9.3v0.2c0 0.5 0.4 0.9 0.9 0.9h7.5v7.5c0 0.5 0.4 0.9 0.9 0.9h0.2c0.5 0 0.9-0.4 0.9-0.9V10.4h7.5c0.5 0 0.9-0.4 0.9-0.9V9.3C18.8 8.8 18.4 8.4 17.9 8.4z" fill="#2784C6"/>
+                                </svg>
+                            </a></th>
+                            <th data-field="time">
+                                <eq name="Think.session.lang" value="1">
+                                    Time
+                                <else/>
+                                    时间
+                                </eq>
+                                </th>
+                            <th data-field="participant">
+                                <eq name="Think.session.lang" value="1">
+                                    Participants
+                                <else/>
+                                    参与人
+                                </eq>
+                            </th>
+                            <th data-field="sponsor">
+                                <eq name="Think.session.lang" value="1">
+                                    Host
+                                <else/>
+                                    发起人
+                                </eq>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <foreach name="activityList" item="activList">
+                                <tr>
+                                    <td class="first-child">
+                                        <a href="<{:U('Club/activityInfo',array('id'=>code($activList['id'],1)))}>">
+                                            <eq name="Think.session.lang" value="1">
+                                                <{$activList.en_theme}>
+                                            <else/>
+                                                <{$activList.theme}>
+                                            </eq>
+                                        </a>
+                                        <p><span>add :</span>Shenzhen City, Nanshan District Shennan Road No. 145</p>
+                                    </td>
+                                    <td><{$activList.validity}></td>
+                                    <td><a href="#"><{$activList.id|getNum}></a></td>
+                                    <td>
+                                        <img src="<{$Think.const.PUBLIC_URL}>Upload/<{$activList.assign_user_id|getPhoto}>"
+                                            alt=""><span><{$activList.assign_user_id|getUsername}></span>
+                                    </td>
+                                </tr>
+                            </foreach>
+                        </tbody>
+                    </table>
+                </div>
+                <notempty name="activityList">
+                    <div class="center f-pagination-bloc">
+                        <ul class="pagination f-pagination">
+                            <{$pageList}>
+                        </ul>
+                    </div>
+                </notempty>
+            </div>
+        </div>
+    </div>
+<!--中间end-->
+<include file='Public/foot'/>

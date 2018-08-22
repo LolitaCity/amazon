@@ -1,0 +1,163 @@
+<include file="Public/header"/>
+ <div class="row"><div class="col s12 m8">
+        <div class="f-user-comment-bloc">
+            <div class="card f-user-comment">
+                <div class="card-content f-user-comment-content">
+                    <p class="card-title"><i>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 18" preserveAspectRatio="xMidYMid">
+                            <path d="M6.8 6.7c1.8 0 3.3-1.5 3.3-3.3C10.2 1.5 8.7 0 6.8 0S3.5 1.5 3.5 3.3C3.5 5.2 5 6.7 6.8 6.7zM6.8 7.7c-3.2 0-5.9 2.2-6.8 5.2 1.8 2.1 4.4 3.4 7.4 3.4 2.5 0 4.7-0.9 6.5-2.5C13.3 10.4 10.4 7.7 6.8 7.7z"
+                            fill="#737373"/>
+                        </svg>
+                    </i>
+                        <eq name="Think.session.lang" value="1">
+                            My Friends
+                        <else/>
+                            我的好友
+                        </eq>                        
+                    </p>
+                    <ul class="collection f-user-comment-collection">
+                        <foreach name='uList' item='list'>
+                            <li class="collection-item avatar">
+                                <a href="<{:U('User/info',array('id'=>code($list['id'],1)))}>">
+                                    <neq name="list['image']" value="">
+                                        <img src="<{$Think.const.PUBLIC_URL}>Upload/<{$list.image}>" alt="" class="circle"/>
+                                    <else/>
+                                         <img src="<{$Think.const.PUBLIC_URL}>Upload/common/comm_user.jpg" alt="" class="circle">
+                                    </neq>
+                                </a>
+                                <span class="title">
+                                    <eq name="Think.session.lang" value="1">
+                                        <{$list.en_name}>
+                                    <else/>
+                                        <{$list.name}>
+                                    </eq>
+                                </span>
+
+                                <div class="secondary-content f-btn">
+                                    <ul id="dropdown<{$key}>" class="dropdown-content">
+                                        <li><a class="modal-trigger" href="#modal1">
+                                                <eq name="Think.session.lang" value="1">
+                                                    Message
+                                                <else/>
+                                                    留言
+                                                </eq>
+                                            </a></li>
+                                        <li>
+                                            <eq name="Think.session.lang" value="1">
+                                                <a onclick="if (confirm('Are you sure you want to delete this friend?')) return true; else return false;" href="#!">
+                                                    Delete friends
+                                                </a>
+                                            <else/>
+                                                <a onclick="if (confirm('确实要删除此好友吗?')) return true; else return false;" href="#!">
+                                                    删除好友
+                                                </a>
+                                            </eq>                                            
+                                        </li>
+                                    </ul>
+                                    <a onclick="clickId(this)" id="<{$list.id}>" class="btn f-btn-blue f-btn-small dropdown-button" href="#!" data-activates="dropdown<{$key}>">
+                                        <eq name="Think.session.lang" value="1">
+                                            Handle
+                                        <else/>
+                                            处理
+                                        </eq>
+                                        <i
+                                            class="mdi-navigation-arrow-drop-down right">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             viewBox="0 0 18 21">
+                                            <path d="M8 8l-131.706-131.705h263.414l-131.706 131.705z" fill="#fff"></path>
+                                        </svg>
+                                    </i></a>
+                                </div>
+                            </li>
+                        </foreach>
+                    </ul>
+                    <notempty name='uList'>
+                        <div class="center f-pagination-bloc">
+                            <{$pageList}>
+                        </div>
+                    </notempty>                    
+                </div>
+            </div>
+        </div>
+        <!-- f-replay-bloc -->
+        <div class="modal f-modal-bloc" id="modal1">
+            <div class="modal-content f-modal">
+                <h4>
+                    <eq name="Think.session.lang" value="1">
+                        Add a message
+                    <else/>
+                        新增一条留言
+                    </eq>                    
+                </h4>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="textarea11" class="materialize-textarea" length="120"></textarea>
+                        <label for="textarea11" class="">
+                            <eq name="Think.session.lang" value="1">
+                                Textarea
+                            <else/>
+                                内容
+                            </eq>
+                        </label>
+                        <span class="character-counter" style="float: right; font-size: 12px; height: 1px;"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p class="f-btn center">
+                        <button class="btn waves-effect waves-light f-btn-blue c-font-bold f-btn-small modal-close" type="submit" name="action" id='addMessage'>
+                            <eq name="Think.session.lang" value="1">
+                                SUBMIT
+                            <else/>
+                                提交
+                            </eq>                            
+                        </button>
+                        <button class="btn waves-effect waves-light f-btn-blue c-font-bold f-btn-small modal-close" type="submit" name="action">
+                            <eq name="Think.session.lang" value="1">
+                                CANCEL
+                            <else/>
+                                取消
+                            </eq>
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <input name="id" type="hidden" value=""/>
+    </div>
+<!--中间end-->
+<include file='Public/foot'/>
+<script>    
+    function clickId(obj){
+        $("input[name='id']").val($(obj).attr("id"));
+    }
+    $(function(){    
+        $("#addMessage").click(function(){
+            var content =$("#textarea11").val();
+            var id      =$("input[name='id']").val();
+            if(content==""){
+                if("<?php echo $_SESSION['lang'];?>"=='1'){
+                    alert("Message content can not be empty");
+                    return false;
+                }else{                                    
+                    alert("留言内容不能为空");
+                    return false;
+                }
+            }
+            $.post('__MODULE__/Im/addMessage',{accept_user_id:id,content:content},function(data){
+                if(data==1){
+                    if("<?php echo $_SESSION['lang'];?>"=='1'){
+                        alert("Message success");
+                    }else{                                    
+                        alert("留言成功");
+                    }
+                }else{                    
+                    if("<?php echo $_SESSION['lang'];?>"=='1'){
+                        alert("Message failed");
+                    }else{                                    
+                        alert("留言失败");
+                    }
+                }
+            },'HTML');
+        });
+    });
+</script>

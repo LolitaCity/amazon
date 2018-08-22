@@ -1,0 +1,504 @@
+<include file="Public/header"/>
+<div class="row">
+<div class="col s12 m8">
+    <div class="f-user-info-bloc">
+        <div class="card f-user-info">
+            <div class="card-content f-user-info-content">
+                <div class="f-user-info-content-img center" style="height: 195px;">
+                <input type='hidden' name='friend_id' value="<{$userInfo.id}>"/>   
+                    
+                    <div id="preview" class="avatar">
+                        <neq name="userInfo['image']" value=''>
+                            <img src="<{$Think.const.PUBLIC_URL}>Upload/<{$userInfo.image}>" />
+                        <else/>
+                            <img src="<{$Think.const.PUBLIC_URL}>Upload/common/comm_user.jpg" />
+                        </neq>
+                    </div>
+                    <p>
+                        <neq name="userInfo['name']" value=''>
+                            <{$userInfo.name}>
+                        <else/>
+                            <{$userInfo.nickname}>
+                        </neq>
+                    </p>
+                    <eq name="userInfo['id']" value="$_SESSION['home']['id']"> 
+                        <form action="<{:U('User/editPhoto')}>" method="post" enctype="multipart/form-data">
+                             
+                            <div class="file-field input-field f-btn center">
+                                <div class="btn f-btn-blue f-btn-small">
+                                    <span>
+                                        <eq name="Think.session.lang" value="1">
+                                            Select Picture
+                                        <else/>
+                                            选择图片
+                                        </eq>
+                                    </span>
+                                    <input type="file" id="file"  name="big_photo" value="" onchange="preview(this)" /><br/>
+                                    <!--<input type="file">-->
+                                </div>
+                                    <button class="btn waves-effect waves-light f-btn-blue c-font-bold f-btn-small" type="submit">
+                                        <eq name="Think.session.lang" value="1">
+                                            <input type='submit' value='SUBMIT' />
+                                        <else/>
+                                            <input type='submit' value='提交' />
+                                        </eq>                                        
+                                    </button>
+                            </div>
+                        </form>
+                    </eq>
+                </div>                
+                <div class="f-user-info-content-text">
+                    <table>
+                        <tr>
+                            <td width="130px">
+                                <eq name="Think.session.lang" value="1">
+                                    Department
+                                <else/>
+                                    部门
+                                </eq>
+                            </td>
+                            <td><{$userInfo.section_id|getSection}></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <eq name="Think.session.lang" value="1">
+                                    Tel
+                                <else/>
+                                    电话
+                                </eq>
+                            </td>
+                            <td id="tel"><{$userInfo.tel}></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <eq name="Think.session.lang" value="1">
+                                    Email
+                                <else/>
+                                    邮箱
+                                </eq>
+                            </td>
+                            <td id="email"><{$userInfo.email}></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <eq name="Think.session.lang" value="1">
+                                    Personal description
+                                <else/>
+                                    个人描述
+                                </eq>
+                            </td>
+                            <td id="desc_">
+                                <eq name="Think.session.lang" value="1">
+                                    <{$userInfo.en_desc_}>
+                                <else/>
+                                    <{$userInfo.desc_}>
+                                </eq>
+                            </td>
+                        </tr>
+                        <eq name="userInfo['id']" value="$_SESSION['home']['id']"> 
+                            <tr>
+                                <td colspan="2">
+                                    <p class="f-btn center">
+                                        <button class="btn modal-trigger waves-effect waves-light f-btn-blue c-font-bold f-btn-small modal-close"
+                                                type="submit" name="action" data-target="modal4" id="edit_info">
+                                            <eq name="Think.session.lang" value="1">
+                                                Modify data
+                                            <else/>
+                                                修改资料
+                                            </eq>                                            
+                                        </button>
+                                        <button class="btn modal-trigger waves-effect waves-light f-btn-blue c-font-bold f-btn-small modal-close"
+                                                type="submit" name="action" data-target="modal5">
+                                            <eq name="Think.session.lang" value="1">
+                                                Modify password
+                                            <else/>
+                                                修改密码
+                                            </eq>                                            
+                                        </button>
+                                    </p>
+                                </td>
+                            </tr>
+                        <else/>
+                            <tr>
+                                <td colspan="2">
+                                    <p class="f-btn center">
+                                        <button class="btn modal-trigger waves-effect waves-light f-btn-blue c-font-bold f-btn-small modal-close"
+                                                type="submit" name="action" data-target="modal6" id="edit_info">
+                                            <eq name="Think.session.lang" value="1">
+                                                Message
+                                            <else/>
+                                                留言
+                                            </eq>                                            
+                                        </button>
+                                        <button class="btn waves-effect waves-light f-btn-blue f-btn-small" id='add'>
+                                            <eq name="Think.session.lang" value="1">
+                                                <switch name='status' >
+                                                    <case value='3'>My good friend</case>
+                                                    <case value='2'>Waiting for the other party to agree</case>
+                                                    <default/>Apply for friends
+                                                </switch>
+                                            <else/>
+                                                <switch name='status' >
+                                                    <case value='3'>我的好友</case>
+                                                    <case value='2'>等待对方同意</case>
+                                                    <default/>申请加为好友
+                                                </switch>
+                                            </eq>
+                                        </button>
+                                    </p>
+                                </td>
+                            </tr>
+                        </eq>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function(){
+            $("#edit_info").click(function(){
+                var tel     =$("#tel").html();
+                var email   =$("#email").html();
+                var desc_   =$("#desc_").html();
+                $("#phonenumber").val(tel);
+                $("#E-mail").val(email);
+                $("#Introduction").html(desc_);
+            });
+            
+            $("#sub").click(function(){
+                if($("#phonenumber").val()!=''){
+                    var re =/^1\d{10}$/;
+                    if(!re.test($("#phonenumber").val())){                        
+                        if("<?php echo $_SESSION['lang'];?>"=='1'){
+                            alert("Cell phone number error");
+                            return false;
+                        }else{                                    
+                            alert("手机号码错误");
+                            return false;
+                        }
+                    }
+                }
+                if($("#E-mail").val()!=""){
+                    var email  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                    if(!email.test($("#E-mail").val())){                        
+                        if("<?php echo $_SESSION['lang'];?>"=='1'){
+                            alert("Mailbox error");
+                            return false;
+                        }else{                                    
+                            alert("邮箱错误");
+                            return false;
+                        }                        
+                    }
+                }
+                $("#active").submit();                
+            }); 
+            
+            /*
+             * 添加好友
+             */
+            $("#add").click(function(){ 
+                if($.trim($("#add").html().substring(0,110))=="申请加为好友"){
+                    var friend_id=$("input[name='friend_id']").val();
+                    $.post("__MODULE__/User/addFriend",{friend_id:friend_id},function(data){
+                        if(data==1){
+                            if("<?php echo $_SESSION['lang'];?>"=='1'){
+                                alert("Mailbox error has been applied, waiting for the other party to agree");
+                                $("#add").html("Waiting for the other party to agree");
+                            }else{                                    
+                                alert("已申请，等待对方同意");
+                                $("#add").html("等待对方同意");
+                            }
+                        }
+                    },'JSON');
+                }
+            });
+        });
+    </script>
+    <div class="modal f-modal-bloc" id="modal4">
+        <div class="modal-content f-modal">
+            <h4>
+                <eq name="Think.session.lang" value="1">
+                    Edit
+                <else/>
+                    编辑
+                </eq>
+            </h4>
+            <form action="<{:U('User/editInfo')}>" method="post" id='active'>
+                <div class="row">
+                    <div class="input-field col m6 s12">
+                        <input id="phonenumber" type="text" class="validate" name='tel'>
+                        <label for="phone number">
+                        <eq name="Think.session.lang" value="1">
+                            Tel
+                        <else/>
+                            电话
+                        </eq>
+                        </label>
+                    </div>
+                    <div class="input-field col m6 s12">
+                        <input id="E-mail" type="url" class="validate" name='email'>
+                        <label for="E-mail">
+                        <eq name="Think.session.lang" value="1">
+                            Email
+                        <else/>
+                            邮箱
+                        </eq>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="Introduction" class="materialize-textarea" length="120" name='desc_'></textarea>
+                        <label for="Introduction" class="">
+                        <eq name="Think.session.lang" value="1">
+                            Introduction
+                        <else/>
+                            描述
+                        </eq></label>
+                        <span class="character-counter" style="float: right; font-size: 12px; height: 1px;"></span>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <p class="f-btn center">
+                    <button class="btn waves-effect waves-light f-btn-blue c-font-bold f-btn-small modal-close" type="submit" name="action" id="sub">
+                        <eq name="Think.session.lang" value="1">
+                            SUBMIT
+                        <else/>
+                            提交
+                        </eq>
+                    </button>
+                    <button class="btn waves-effect waves-light f-btn-blue c-font-bold f-btn-small modal-close" type="submit" name="action">
+                        <eq name="Think.session.lang" value="1">
+                            CANCEL
+                        <else/>
+                            取消
+                        </eq>
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal f-modal-bloc" id="modal5">
+        <div class="modal-content f-modal">
+            <h4>
+                <eq name="Think.session.lang" value="1">
+                    Modify Password
+                <else/>
+                    修改密码
+                </eq>
+                </h4>
+            <form action="<{:U('User/editPass')}>" method="post" id='edit_pass'>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="Original Password" type="password" class="validate" name='oldPassword'/>
+                        <label for="Original Password">
+                            <eq name="Think.session.lang" value="1">
+                                Original Password
+                            <else/>
+                                原密码
+                            </eq>
+                            </label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="News Password" type="password" class="validate" name='newPassword'/>
+                        <label for="News Password">
+                            <eq name="Think.session.lang" value="1">
+                                News Password
+                            <else/>
+                                新密码
+                            </eq>
+                            </label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="Confirm Password" type="password" class="validate" name='rePassword'/>
+                        <label for="Confirm Password">
+                            <eq name="Think.session.lang" value="1">
+                                Confirm Password
+                            <else/>
+                                确认密码
+                            </eq>
+                        </label>
+                    </div>
+
+                </div>
+            </form>
+            <div class="modal-footer">
+                <p class="f-btn center">
+                    <button class="btn waves-effect waves-light f-btn-blue c-font-bold f-btn-small modal-close" type="submit" name="action" id='edit_password'>
+                        <eq name="Think.session.lang" value="1">
+                            SUBMIT
+                        <else/>
+                            提交
+                        </eq>                        
+                    </button>
+                    <button class="btn waves-effect waves-light f-btn-blue c-font-bold f-btn-small modal-close" type="submit" name="action">
+                        <eq name="Think.session.lang" value="1">
+                            CANCEL
+                        <else/>
+                            取消
+                        </eq> 
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!--发送消息-->
+    <div class="modal f-modal-bloc" id="modal6">
+        <div class="modal-content f-modal">
+            <h4>
+                <eq name="Think.session.lang" value="1">
+                    Leaving A Message
+                <else/>
+                    留言
+                </eq> 
+                </h4>
+            <form action="<{:U('Im/addMessage')}>" method="post" id='mes'>
+                <input type='hidden' name='accept_user_id' value="<{$userInfo.id}>"/>
+                <div class="row">                   
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="message" class="materialize-textarea" length="120" name='content'></textarea>
+                            <label for="message" class="">
+                                <eq name="Think.session.lang" value="1">
+                                    Message
+                                <else/>
+                                    消息
+                                </eq></label>
+                            <span class="character-counter" style="float: right; font-size: 12px; height: 1px;"></span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <p class="f-btn center">
+                    <button class="btn waves-effect waves-light f-btn-blue c-font-bold f-btn-small modal-close" id='message_'>
+                        <eq name="Think.session.lang" value="1">
+                            SUBMIT
+                        <else/>
+                            提交
+                        </eq>
+                    </button>
+                    <button class="btn waves-effect waves-light f-btn-blue c-font-bold f-btn-small modal-close">
+                        <eq name="Think.session.lang" value="1">
+                            CANCEL
+                        <else/>
+                            取消
+                        </eq>
+                    </button>
+                </p>
+            </div>
+            <script>
+                $("#message_").click(function(){
+                    var accept_user_id  =$("input[name='accept_user_id']").val();
+                    var content         =$("#message").val();
+                    if(content==""){                        
+                        if("<?php echo $_SESSION['lang'];?>"=='1'){
+                            alert("Message can not be empty");
+                        }else{                                    
+                            alert("留言不能为空");
+                        }
+                    }else{
+                        $.post("__MODULE__/Im/addMessage/",{accept_user_id:accept_user_id,content:content},function(data){
+                            if(data==1){                                
+                                if("<?php echo $_SESSION['lang'];?>"=='1'){
+                                    alert('Message success');
+                                }else{                                    
+                                    alert('留言成功');
+                                }
+                            }else{
+                                if("<?php echo $_SESSION['lang'];?>"=='1'){
+                                    alert("Message failed. Try again later");
+                                }else{                                    
+                                    alert("留言失败，稍后再试");
+                                }                                
+                            }
+                        });
+                    }
+                })
+            </script>
+        </div>
+    </div>
+    <!--发送消息end-->
+</div>
+    <script>
+        $(function(){
+            $("#edit_password").click(function(){
+                var oldPass =$("input[name='oldPassword']").val();
+                var newPass =$("input[name='newPassword']").val();
+                var rePass  =$("input[name='rePassword']").val();
+                if(newPass.length<6){
+                    if("<?php echo $_SESSION['lang'];?>"=='1'){
+                        alert("New password at least 6 bit");
+                        return false;
+                    }else{                                    
+                        alert("新密码至少6位");
+                        return false;
+                    }
+                }                
+                if(oldPass==''){                    
+                    if("<?php echo $_SESSION['lang'];?>"=='1'){
+                        alert("The original password can not be empty");
+                        return false;
+                    }else{                                    
+                        alert("原密码不能为空");
+                        return false;
+                    }
+                }
+                if(newPass!==rePass){                    
+                    if("<?php echo $_SESSION['lang'];?>"=='1'){
+                        alert("Two passwords are not consistent");
+                        return false;
+                    }else{                                    
+                        alert("两次密码不一致");
+                        return false;
+                    }
+                }
+                $.post("__CONTROLLER__/checkPass",{oldPass:oldPass,newPass:newPass},function(data){
+                    if(data==1){                        
+                        if("<?php echo $_SESSION['lang'];?>"=='1'){
+                            alert('Original password error');
+                        }else{                                    
+                            alert('原密码错误');
+                        }
+                    }
+                    if(data==2){
+                        if("<?php echo $_SESSION['lang'];?>"=='1'){
+                            alert("Password modification success");
+                        }else{                                    
+                            alert("密码修改成功");
+                        }                        
+                    }
+                    if(data==3){
+                        if("<?php echo $_SESSION['lang'];?>"=='1'){
+                            alert("Password modification failed");
+                        }else{                                    
+                            alert("密码修改失败");
+                        }                        
+                    }
+                },'json');
+            });
+        });
+        
+        //头像预览
+        function preview(file)  
+        {  
+            var prevDiv = document.getElementById('preview');  
+            if (file.files && file.files[0])  
+            {  
+            var reader = new FileReader();  
+            reader.onload = function(evt){  
+            prevDiv.innerHTML = '<img src="' + evt.target.result + '" />';  
+           }    
+            reader.readAsDataURL(file.files[0]);  
+           }  
+            else    
+            {  
+            prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';  
+            }  
+        }  
+    </script>
+<!--中间end-->
+<include file='Public/foot'/>
