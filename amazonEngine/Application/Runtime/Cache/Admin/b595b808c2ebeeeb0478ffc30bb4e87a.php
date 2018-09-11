@@ -40,7 +40,7 @@
 <script type="text/javascript">
 $(function(){
 	DWZ.init("<?php echo (PUBLIC_URL); ?>Admin/Dwz/dwz.frag.xml", {
-		loginUrl:"Manager/login_dialog", loginTitle:"Login",	// 弹出登录对话框
+		loginUrl:"/Manager/login_dialog", loginTitle:"Login",	// 弹出登录对话框
 //		loginUrl:"login.html",	// 跳到登录页面
 		statusCode:{ok:200, error:300, timeout:301}, //【可选】
 		pageInfo:{pageNum:"pageNum", numPerPage:"numPerPage", orderField:"_order", orderDirection:"_sort"}, //【可选】

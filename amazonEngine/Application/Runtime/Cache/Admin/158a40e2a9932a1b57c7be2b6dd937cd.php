@@ -15,7 +15,7 @@
                 </select>
             </div>
             <?php if($vo['p_id'] == '' ): ?><div class="unit" id='control'>
-                    <label>控制器：</label>
+                    <label>控制s器：</label>
                     <input type="text" id='seled' name="controller" size="15" class="alphanumeric" value="<?php echo ($vo["controller"]); ?>"/>
                 </div><?php endif; ?>
             <div class="unit">
