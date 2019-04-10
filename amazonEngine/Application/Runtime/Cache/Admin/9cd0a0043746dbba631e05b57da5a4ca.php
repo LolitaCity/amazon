@@ -8,7 +8,7 @@
 
 
 <div class="pageHeader">
-    <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="/amazonEngine/MinimumPrice/noticeList" method="post">
+    <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="/MinimumPrice/noticeList" method="post">
 	<div class="searchBar">		
             <table class="searchContent">
                 <tr>
@@ -28,7 +28,7 @@
 <div class="pageContent">
     <div class="panelBar">
         <ul class="toolBar">            
-            <li><a title="Are you sure you want to delete?" target="selectedTodo" rel="id[]" href="/amazonEngine/MinimumPrice/delete/sign/<?php echo code('5',1)?>/db/<?php echo code('Warning',1);?>" class="delete"><span>Batch delete</span></a></li>                  
+            <li><a title="Are you sure you want to delete?" target="selectedTodo" rel="id[]" href="/MinimumPrice/delete/sign/<?php echo code('5',1)?>/db/<?php echo code('Warning',1);?>" class="delete"><span>Batch delete</span></a></li>                  
             <li class="line">line</li>
         </ul>
     </div>

@@ -8,7 +8,7 @@
 
 
 <div class="pageHeader">
-    <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="/amazonEngine/MinimumPrice/productUrlList" method="post">
+    <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="/MinimumPrice/productUrlList" method="post">
 	<div class="searchBar">		
             <table class="searchContent">
                 <tr>
@@ -33,7 +33,7 @@
         <ul class="toolBar">            
             <li><a class="add" href="<?php echo U('MinimumPrice/show',array('sign'=>code('6',1),'db'=>code('ProductUrlList',1)));?>" width='500' height='200'  target="dialog" mask="true"><span>Add</span></a></li>                      
             <li><a title="Are you sure you want to delete?" target="selectedTodo" rel="id[]" href="<?php echo U('MinimumPrice/del',array('db'=>code('ProductUrlList',1)));?>" class="delete"><span>Batch delete</span></a></li>                  
-            <li><a class="edit" href="/amazonEngine/MinimumPrice/show/id/{l_id}/db/<?php echo code('ProductUrlList',1)?>/sign/<?php echo code('6',1);?>" width='500' height='200' target="dialog" mask="true" warn="Please select a message"><span>Edit</span></a></li>
+            <li><a class="edit" href="/MinimumPrice/show/id/{l_id}/db/<?php echo code('ProductUrlList',1)?>/sign/<?php echo code('6',1);?>" width='500' height='200' target="dialog" mask="true" warn="Please select a message"><span>Edit</span></a></li>
             <li class="line">line</li>
         </ul>
     </div>
